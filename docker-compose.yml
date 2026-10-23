@@ -2,9 +2,18 @@ version: '3.8'
 
 services:
   postgres:
-    image: postgres:16-alpine
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    image: laba1-postgres:16-pgaudit
     container_name: laba1-postgres
     restart: unless-stopped
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_preload_libraries=pgaudit"
+      - "-c"
+      - "pgaudit.log=read, write, ddl, role"
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-university_db}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}

@@ -32,7 +32,7 @@ help:
 	@echo "======================================================================"
 
 up:
-	$(COMPOSE) up -d postgres
+	$(COMPOSE) up -d --build postgres
 
 down:
 	$(COMPOSE) down
