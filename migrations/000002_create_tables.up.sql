@@ -8,7 +8,7 @@
 -- ----------------------------------------------------------------------------
 
 -- Справочник уровней доверия цифрового профиля
-CREATE TABLE ref.trust_levels (
+CREATE TABLE IF NOT EXISTS ref.trust_levels (
     trust_level_id INT PRIMARY KEY,
     code VARCHAR(30) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
@@ -26,7 +26,7 @@ COMMENT ON COLUMN ref.trust_levels.description IS 'Описание разреш
 COMMENT ON COLUMN ref.trust_levels.is_active IS 'Флаг активности классификатора';
 
 -- Справочник типов удостоверяющих документов
-CREATE TABLE ref.document_types (
+CREATE TABLE IF NOT EXISTS ref.document_types (
     doc_type_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     type_code VARCHAR(30) NOT NULL UNIQUE,
     type_name VARCHAR(150) NOT NULL,
@@ -42,7 +42,7 @@ COMMENT ON COLUMN ref.document_types.has_rfid_chip IS 'Признак налич
 COMMENT ON COLUMN ref.document_types.validity_years IS 'Срок действия документа в годах';
 
 -- Справочник биометрических модальностей
-CREATE TABLE ref.biometric_modalities (
+CREATE TABLE IF NOT EXISTS ref.biometric_modalities (
     modality_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     code VARCHAR(30) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
@@ -60,7 +60,7 @@ COMMENT ON COLUMN ref.biometric_modalities.far_limit IS 'Предел коэфф
 COMMENT ON COLUMN ref.biometric_modalities.frr_limit IS 'Предел коэффициента ложного отказа (FRR)';
 
 -- Справочник ведомств и организаций-потребителей
-CREATE TABLE ref.agencies (
+CREATE TABLE IF NOT EXISTS ref.agencies (
     agency_id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     agency_code VARCHAR(50) NOT NULL UNIQUE,
     agency_name VARCHAR(255) NOT NULL,
@@ -84,7 +84,7 @@ COMMENT ON COLUMN ref.agencies.is_active IS 'Флаг активности по�
 -- ----------------------------------------------------------------------------
 
 -- Базовые сведения о гражданах (ПДн)
-CREATE TABLE app.citizens (
+CREATE TABLE IF NOT EXISTS app.citizens (
     citizen_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL CHECK (length(first_name) >= 1),
     last_name VARCHAR(100) NOT NULL CHECK (length(last_name) >= 1),
@@ -105,7 +105,7 @@ COMMENT ON COLUMN app.citizens.gender IS 'Пол (M - мужской, F - жен
 COMMENT ON COLUMN app.citizens.created_at IS 'Дата и время первичной регистрации записи';
 
 -- Единый цифровой профиль гражданина
-CREATE TABLE app.digital_profiles (
+CREATE TABLE IF NOT EXISTS app.digital_profiles (
     profile_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     citizen_id BIGINT NOT NULL UNIQUE REFERENCES app.citizens(citizen_id) ON DELETE RESTRICT,
     snils CHAR(11) NOT NULL UNIQUE CHECK (snils ~ '^[0-9]{11}$'),
@@ -126,7 +126,7 @@ COMMENT ON COLUMN app.digital_profiles.verified_at IS 'Дата подтверж
 COMMENT ON COLUMN app.digital_profiles.created_at IS 'Дата создания цифрового профиля';
 
 -- Электронные паспорта и смарт-карты (чувствительные данные)
-CREATE TABLE app.electronic_passports (
+CREATE TABLE IF NOT EXISTS app.electronic_passports (
     passport_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     citizen_id BIGINT NOT NULL REFERENCES app.citizens(citizen_id) ON DELETE RESTRICT,
     doc_type_id INT NOT NULL REFERENCES ref.document_types(doc_type_id) ON DELETE RESTRICT,
@@ -154,7 +154,7 @@ COMMENT ON COLUMN app.electronic_passports.encrypted_chip_payload IS 'Крипт
 COMMENT ON COLUMN app.electronic_passports.is_active IS 'Флаг валидности документа';
 
 -- Биометрические шаблоны (особо чувствительные Restricted-данные)
-CREATE TABLE app.biometric_templates (
+CREATE TABLE IF NOT EXISTS app.biometric_templates (
     biometric_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     citizen_id BIGINT NOT NULL REFERENCES app.citizens(citizen_id) ON DELETE RESTRICT,
     modality_id INT NOT NULL REFERENCES ref.biometric_modalities(modality_id) ON DELETE RESTRICT,
@@ -178,7 +178,7 @@ COMMENT ON COLUMN app.biometric_templates.registered_at IS 'Время реги�
 COMMENT ON COLUMN app.biometric_templates.status IS 'Статус биометрического шаблона';
 
 -- Согласия гражданина на доступ к цифровому профилю (M:N связь)
-CREATE TABLE app.access_consents (
+CREATE TABLE IF NOT EXISTS app.access_consents (
     consent_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     profile_id BIGINT NOT NULL REFERENCES app.digital_profiles(profile_id) ON DELETE RESTRICT,
     agency_id INT NOT NULL REFERENCES ref.agencies(agency_id) ON DELETE RESTRICT,
@@ -200,7 +200,7 @@ COMMENT ON COLUMN app.access_consents.is_revoked IS 'Признак отзыва
 COMMENT ON COLUMN app.access_consents.consent_signature IS 'Электронная цифровая подпись согласия';
 
 -- Токены межведомственного доступа с контролем уровней доверия
-CREATE TABLE app.access_tokens (
+CREATE TABLE IF NOT EXISTS app.access_tokens (
     token_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     profile_id BIGINT NOT NULL REFERENCES app.digital_profiles(profile_id) ON DELETE RESTRICT,
     agency_id INT NOT NULL REFERENCES ref.agencies(agency_id) ON DELETE RESTRICT,
@@ -226,7 +226,7 @@ COMMENT ON COLUMN app.access_tokens.status IS 'Статус валидности
 -- ----------------------------------------------------------------------------
 
 -- Журнал подключений пользователей
-CREATE TABLE audit.login_log (
+CREATE TABLE IF NOT EXISTS audit.login_log (
     login_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     login_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     username TEXT NOT NULL,
@@ -245,7 +245,7 @@ COMMENT ON COLUMN audit.login_log.auth_method IS 'Метод аутентифи�
 COMMENT ON COLUMN audit.login_log.session_status IS 'Статус сессии';
 
 -- Журнал изменений чувствительных данных
-CREATE TABLE audit.change_log (
+CREATE TABLE IF NOT EXISTS audit.change_log (
     change_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     changed_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     username TEXT NOT NULL,
@@ -268,7 +268,7 @@ COMMENT ON COLUMN audit.change_log.old_data IS 'JSON образ строки д�
 COMMENT ON COLUMN audit.change_log.new_data IS 'JSON образ строки после модификации';
 
 -- Журнал биометрических верификаций
-CREATE TABLE audit.biometric_verifications (
+CREATE TABLE IF NOT EXISTS audit.biometric_verifications (
     verification_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     verified_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     citizen_id BIGINT NOT NULL REFERENCES app.citizens(citizen_id) ON DELETE RESTRICT,
@@ -294,7 +294,7 @@ COMMENT ON COLUMN audit.biometric_verifications.client_ip IS 'Сетевой а�
 -- ----------------------------------------------------------------------------
 
 -- Пакетная загрузка данных для выдачи электронных паспортов
-CREATE TABLE stg.passport_batch_import (
+CREATE TABLE IF NOT EXISTS stg.passport_batch_import (
     import_id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     batch_uuid UUID NOT NULL DEFAULT gen_random_uuid(),
     source_system VARCHAR(100) NOT NULL,
@@ -318,31 +318,31 @@ COMMENT ON COLUMN stg.passport_batch_import.error_message IS 'Текст оши�
 -- ----------------------------------------------------------------------------
 
 -- ref
-CREATE INDEX idx_agencies_tier ON ref.agencies(trust_tier);
+CREATE INDEX IF NOT EXISTS idx_agencies_tier ON ref.agencies(trust_tier);
 
 -- app
-CREATE INDEX idx_citizens_names ON app.citizens(last_name, first_name);
-CREATE INDEX idx_citizens_birth ON app.citizens(birth_date);
-CREATE INDEX idx_profiles_citizen ON app.digital_profiles(citizen_id);
-CREATE INDEX idx_profiles_trust ON app.digital_profiles(trust_level_id);
-CREATE INDEX idx_passports_citizen ON app.electronic_passports(citizen_id);
-CREATE INDEX idx_passports_chip ON app.electronic_passports(chip_uid);
-CREATE INDEX idx_passports_status ON app.electronic_passports(is_active);
-CREATE INDEX idx_biometrics_citizen ON app.biometric_templates(citizen_id);
-CREATE INDEX idx_biometrics_modality ON app.biometric_templates(modality_id);
-CREATE INDEX idx_consents_profile ON app.access_consents(profile_id);
-CREATE INDEX idx_consents_agency ON app.access_consents(agency_id);
-CREATE INDEX idx_consents_valid ON app.access_consents(valid_until) WHERE is_revoked IS FALSE;
-CREATE INDEX idx_tokens_profile_agency ON app.access_tokens(profile_id, agency_id);
-CREATE INDEX idx_tokens_expires ON app.access_tokens(expires_at) WHERE status = 'ACTIVE';
+CREATE INDEX IF NOT EXISTS idx_citizens_names ON app.citizens(last_name, first_name);
+CREATE INDEX IF NOT EXISTS idx_citizens_birth ON app.citizens(birth_date);
+CREATE INDEX IF NOT EXISTS idx_profiles_citizen ON app.digital_profiles(citizen_id);
+CREATE INDEX IF NOT EXISTS idx_profiles_trust ON app.digital_profiles(trust_level_id);
+CREATE INDEX IF NOT EXISTS idx_passports_citizen ON app.electronic_passports(citizen_id);
+CREATE INDEX IF NOT EXISTS idx_passports_chip ON app.electronic_passports(chip_uid);
+CREATE INDEX IF NOT EXISTS idx_passports_status ON app.electronic_passports(is_active);
+CREATE INDEX IF NOT EXISTS idx_biometrics_citizen ON app.biometric_templates(citizen_id);
+CREATE INDEX IF NOT EXISTS idx_biometrics_modality ON app.biometric_templates(modality_id);
+CREATE INDEX IF NOT EXISTS idx_consents_profile ON app.access_consents(profile_id);
+CREATE INDEX IF NOT EXISTS idx_consents_agency ON app.access_consents(agency_id);
+CREATE INDEX IF NOT EXISTS idx_consents_valid ON app.access_consents(valid_until) WHERE is_revoked IS FALSE;
+CREATE INDEX IF NOT EXISTS idx_tokens_profile_agency ON app.access_tokens(profile_id, agency_id);
+CREATE INDEX IF NOT EXISTS idx_tokens_expires ON app.access_tokens(expires_at) WHERE status = 'ACTIVE';
 
 -- audit
-CREATE INDEX idx_login_log_time ON audit.login_log(login_time DESC);
-CREATE INDEX idx_login_log_user ON audit.login_log(username);
-CREATE INDEX idx_change_log_time ON audit.change_log(changed_at DESC);
-CREATE INDEX idx_change_log_target ON audit.change_log(table_schema, table_name);
-CREATE INDEX idx_bio_verif_citizen ON audit.biometric_verifications(citizen_id);
-CREATE INDEX idx_bio_verif_time ON audit.biometric_verifications(verified_at DESC);
+CREATE INDEX IF NOT EXISTS idx_login_log_time ON audit.login_log(login_time DESC);
+CREATE INDEX IF NOT EXISTS idx_login_log_user ON audit.login_log(username);
+CREATE INDEX IF NOT EXISTS idx_change_log_time ON audit.change_log(changed_at DESC);
+CREATE INDEX IF NOT EXISTS idx_change_log_target ON audit.change_log(table_schema, table_name);
+CREATE INDEX IF NOT EXISTS idx_bio_verif_citizen ON audit.biometric_verifications(citizen_id);
+CREATE INDEX IF NOT EXISTS idx_bio_verif_time ON audit.biometric_verifications(verified_at DESC);
 
 -- stg
-CREATE INDEX idx_stg_import_status ON stg.passport_batch_import(status) WHERE status = 'PENDING';
+CREATE INDEX IF NOT EXISTS idx_stg_import_status ON stg.passport_batch_import(status) WHERE status = 'PENDING';

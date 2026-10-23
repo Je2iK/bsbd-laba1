@@ -20,12 +20,12 @@ DECLARE
 BEGIN
     IF (TG_OP = 'INSERT') THEN
         v_new_data := to_jsonb(NEW);
-        -- Определение идентификатора строки
-        IF (NEW ? 'citizen_id') THEN v_row_id := (NEW.citizen_id)::text;
-        ELSIF (NEW ? 'profile_id') THEN v_row_id := (NEW.profile_id)::text;
-        ELSIF (NEW ? 'passport_id') THEN v_row_id := (NEW.passport_id)::text;
-        ELSIF (NEW ? 'biometric_id') THEN v_row_id := (NEW.biometric_id)::text;
-        ELSIF (NEW ? 'consent_id') THEN v_row_id := (NEW.consent_id)::text;
+        -- Определение идентификатора строки через JSONB
+        IF (v_new_data ? 'citizen_id') THEN v_row_id := v_new_data ->> 'citizen_id';
+        ELSIF (v_new_data ? 'profile_id') THEN v_row_id := v_new_data ->> 'profile_id';
+        ELSIF (v_new_data ? 'passport_id') THEN v_row_id := v_new_data ->> 'passport_id';
+        ELSIF (v_new_data ? 'biometric_id') THEN v_row_id := v_new_data ->> 'biometric_id';
+        ELSIF (v_new_data ? 'consent_id') THEN v_row_id := v_new_data ->> 'consent_id';
         END IF;
 
         INSERT INTO audit.change_log (
@@ -38,11 +38,11 @@ BEGIN
     ELSIF (TG_OP = 'UPDATE') THEN
         v_old_data := to_jsonb(OLD);
         v_new_data := to_jsonb(NEW);
-        IF (NEW ? 'citizen_id') THEN v_row_id := (NEW.citizen_id)::text;
-        ELSIF (NEW ? 'profile_id') THEN v_row_id := (NEW.profile_id)::text;
-        ELSIF (NEW ? 'passport_id') THEN v_row_id := (NEW.passport_id)::text;
-        ELSIF (NEW ? 'biometric_id') THEN v_row_id := (NEW.biometric_id)::text;
-        ELSIF (NEW ? 'consent_id') THEN v_row_id := (NEW.consent_id)::text;
+        IF (v_new_data ? 'citizen_id') THEN v_row_id := v_new_data ->> 'citizen_id';
+        ELSIF (v_new_data ? 'profile_id') THEN v_row_id := v_new_data ->> 'profile_id';
+        ELSIF (v_new_data ? 'passport_id') THEN v_row_id := v_new_data ->> 'passport_id';
+        ELSIF (v_new_data ? 'biometric_id') THEN v_row_id := v_new_data ->> 'biometric_id';
+        ELSIF (v_new_data ? 'consent_id') THEN v_row_id := v_new_data ->> 'consent_id';
         END IF;
 
         INSERT INTO audit.change_log (
@@ -54,11 +54,11 @@ BEGIN
 
     ELSIF (TG_OP = 'DELETE') THEN
         v_old_data := to_jsonb(OLD);
-        IF (OLD ? 'citizen_id') THEN v_row_id := (OLD.citizen_id)::text;
-        ELSIF (OLD ? 'profile_id') THEN v_row_id := (OLD.profile_id)::text;
-        ELSIF (OLD ? 'passport_id') THEN v_row_id := (OLD.passport_id)::text;
-        ELSIF (OLD ? 'biometric_id') THEN v_row_id := (OLD.biometric_id)::text;
-        ELSIF (OLD ? 'consent_id') THEN v_row_id := (OLD.consent_id)::text;
+        IF (v_old_data ? 'citizen_id') THEN v_row_id := v_old_data ->> 'citizen_id';
+        ELSIF (v_old_data ? 'profile_id') THEN v_row_id := v_old_data ->> 'profile_id';
+        ELSIF (v_old_data ? 'passport_id') THEN v_row_id := v_old_data ->> 'passport_id';
+        ELSIF (v_old_data ? 'biometric_id') THEN v_row_id := v_old_data ->> 'biometric_id';
+        ELSIF (v_old_data ? 'consent_id') THEN v_row_id := v_old_data ->> 'consent_id';
         END IF;
 
         INSERT INTO audit.change_log (
