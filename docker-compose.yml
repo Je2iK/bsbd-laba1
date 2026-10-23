@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: laba1-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-university_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts:/scripts:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-university_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - laba-network
+
+  migrate:
+    image: migrate/migrate:v4.17.0
+    container_name: laba1-migrate
+    volumes:
+      - ./migrations:/migrations
+    entrypoint:
+      - "migrate"
+      - "-path=/migrations"
+      - "-database=postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-university_db}?sslmode=disable"
+    command: ["up"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - laba-network
+
+volumes:
+  pgdata:
+    driver: local
+
+networks:
+  laba-network:
+    driver: bridge

@@ -1,0 +1,14 @@
+DROP ROLE IF EXISTS usr_sec;
+DROP ROLE IF EXISTS usr_ddl;
+DROP ROLE IF EXISTS usr_dml;
+DROP ROLE IF EXISTS usr_auditor;
+DROP ROLE IF EXISTS usr_writer;
+DROP ROLE IF EXISTS usr_reader;
+
+DROP ROLE IF EXISTS security_admin;
+DROP ROLE IF EXISTS dml_admin;
+DROP ROLE IF EXISTS ddl_admin;
+DROP ROLE IF EXISTS auditor;
+DROP ROLE IF EXISTS app_writer;
+DROP ROLE IF EXISTS app_reader;
+DROP ROLE IF EXISTS app_owner;

@@ -1,0 +1,379 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1080" width="1600" height="1080">
+<style>
+
+        .title { font-family: "Times New Roman", serif; font-size: 20px; font-weight: bold; fill: #111; }
+        .tbl-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; }
+        .col-txt { font-family: "Consolas", "Courier New", monospace; font-size: 11px; fill: #222; }
+        .pk { font-weight: bold; fill: #b7472a; }
+        .fk { font-weight: bold; fill: #2b5797; }
+        .uq { font-weight: bold; fill: #6a1b9a; }
+        .type { fill: #666; font-size: 10px; }
+        .conn-line { stroke: #555; stroke-width: 1.5; stroke-dasharray: 4,3; fill: none; }
+        .legend-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; font-weight: bold; }
+    
+</style>
+<rect width="1600" height="1080" fill="#fcfcfc" />
+<text x="50" y="35" class="title">ER-диаграмма домена: Защита БД систем цифровой идентификации граждан (Вариант 12)</text>
+<rect x="900" y="15" width="16" height="16" rx="3" fill="#2b5797" />
+<text x="922" y="28" font-family="Segoe UI" font-size="12px" fill="#333">Схема ref</text>
+<rect x="1020" y="15" width="16" height="16" rx="3" fill="#107c41" />
+<text x="1042" y="28" font-family="Segoe UI" font-size="12px" fill="#333">Схема app</text>
+<rect x="1140" y="15" width="16" height="16" rx="3" fill="#b7472a" />
+<text x="1162" y="28" font-family="Segoe UI" font-size="12px" fill="#333">Схема audit</text>
+<rect x="1260" y="15" width="16" height="16" rx="3" fill="#744da9" />
+<text x="1282" y="28" font-family="Segoe UI" font-size="12px" fill="#333">Схема stg</text>
+<rect x="60" y="60" width="280" height="134" rx="6" fill="#eff4fa" stroke="#1e395b" stroke-width="1.5" />
+<path d="M 60 66 Q 60 60 66 60 L 334 60 Q 340 60 340 66 L 340 86 L 60 86 Z" fill="#2b5797" />
+<text x="70" y="78" class="tbl-title">ref.trust_levels</text>
+<text x="70" y="102" class="col-txt pk">PK</text>
+<text x="98" y="102" class="col-txt">trust_level_id</text>
+<text x="330" y="102" class="col-txt type" text-anchor="end">INT</text>
+<text x="70" y="122" class="col-txt uq">UQ</text>
+<text x="98" y="122" class="col-txt">code</text>
+<text x="330" y="122" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<text x="70" y="142" class="col-txt col-txt">  </text>
+<text x="98" y="142" class="col-txt">name</text>
+<text x="330" y="142" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="70" y="162" class="col-txt col-txt">  </text>
+<text x="98" y="162" class="col-txt">auth_factor_min</text>
+<text x="330" y="162" class="col-txt type" text-anchor="end">INT</text>
+<text x="70" y="182" class="col-txt col-txt">  </text>
+<text x="98" y="182" class="col-txt">description</text>
+<text x="330" y="182" class="col-txt type" text-anchor="end">TEXT</text>
+<rect x="60" y="250" width="280" height="134" rx="6" fill="#eff4fa" stroke="#1e395b" stroke-width="1.5" />
+<path d="M 60 256 Q 60 250 66 250 L 334 250 Q 340 250 340 256 L 340 276 L 60 276 Z" fill="#2b5797" />
+<text x="70" y="268" class="tbl-title">ref.document_types</text>
+<text x="70" y="292" class="col-txt pk">PK</text>
+<text x="98" y="292" class="col-txt">doc_type_id</text>
+<text x="330" y="292" class="col-txt type" text-anchor="end">INT</text>
+<text x="70" y="312" class="col-txt uq">UQ</text>
+<text x="98" y="312" class="col-txt">type_code</text>
+<text x="330" y="312" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<text x="70" y="332" class="col-txt col-txt">  </text>
+<text x="98" y="332" class="col-txt">type_name</text>
+<text x="330" y="332" class="col-txt type" text-anchor="end">VARCHAR(150)</text>
+<text x="70" y="352" class="col-txt col-txt">  </text>
+<text x="98" y="352" class="col-txt">has_rfid_chip</text>
+<text x="330" y="352" class="col-txt type" text-anchor="end">BOOLEAN</text>
+<text x="70" y="372" class="col-txt col-txt">  </text>
+<text x="98" y="372" class="col-txt">validity_years</text>
+<text x="330" y="372" class="col-txt type" text-anchor="end">INT</text>
+<rect x="60" y="440" width="280" height="154" rx="6" fill="#eff4fa" stroke="#1e395b" stroke-width="1.5" />
+<path d="M 60 446 Q 60 440 66 440 L 334 440 Q 340 440 340 446 L 340 466 L 60 466 Z" fill="#2b5797" />
+<text x="70" y="458" class="tbl-title">ref.biometric_modalities</text>
+<text x="70" y="482" class="col-txt pk">PK</text>
+<text x="98" y="482" class="col-txt">modality_id</text>
+<text x="330" y="482" class="col-txt type" text-anchor="end">INT</text>
+<text x="70" y="502" class="col-txt uq">UQ</text>
+<text x="98" y="502" class="col-txt">code</text>
+<text x="330" y="502" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<text x="70" y="522" class="col-txt col-txt">  </text>
+<text x="98" y="522" class="col-txt">name</text>
+<text x="330" y="522" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="70" y="542" class="col-txt col-txt">  </text>
+<text x="98" y="542" class="col-txt">iso_standard</text>
+<text x="330" y="542" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="70" y="562" class="col-txt col-txt">  </text>
+<text x="98" y="562" class="col-txt">far_limit</text>
+<text x="330" y="562" class="col-txt type" text-anchor="end">NUMERIC(8,6)</text>
+<text x="70" y="582" class="col-txt col-txt">  </text>
+<text x="98" y="582" class="col-txt">frr_limit</text>
+<text x="330" y="582" class="col-txt type" text-anchor="end">NUMERIC(8,6)</text>
+<rect x="60" y="660" width="280" height="134" rx="6" fill="#eff4fa" stroke="#1e395b" stroke-width="1.5" />
+<path d="M 60 666 Q 60 660 66 660 L 334 660 Q 340 660 340 666 L 340 686 L 60 686 Z" fill="#2b5797" />
+<text x="70" y="678" class="tbl-title">ref.agencies</text>
+<text x="70" y="702" class="col-txt pk">PK</text>
+<text x="98" y="702" class="col-txt">agency_id</text>
+<text x="330" y="702" class="col-txt type" text-anchor="end">INT</text>
+<text x="70" y="722" class="col-txt uq">UQ</text>
+<text x="98" y="722" class="col-txt">agency_code</text>
+<text x="330" y="722" class="col-txt type" text-anchor="end">VARCHAR(50)</text>
+<text x="70" y="742" class="col-txt col-txt">  </text>
+<text x="98" y="742" class="col-txt">agency_name</text>
+<text x="330" y="742" class="col-txt type" text-anchor="end">VARCHAR(255)</text>
+<text x="70" y="762" class="col-txt uq">UQ</text>
+<text x="98" y="762" class="col-txt">inn</text>
+<text x="330" y="762" class="col-txt type" text-anchor="end">VARCHAR(12)</text>
+<text x="70" y="782" class="col-txt col-txt">  </text>
+<text x="98" y="782" class="col-txt">trust_tier</text>
+<text x="330" y="782" class="col-txt type" text-anchor="end">INT</text>
+<rect x="420" y="60" width="320" height="174" rx="6" fill="#eef9f2" stroke="#0b532c" stroke-width="1.5" />
+<path d="M 420 66 Q 420 60 426 60 L 734 60 Q 740 60 740 66 L 740 86 L 420 86 Z" fill="#107c41" />
+<text x="430" y="78" class="tbl-title">app.citizens</text>
+<text x="430" y="102" class="col-txt pk">PK</text>
+<text x="458" y="102" class="col-txt">citizen_id</text>
+<text x="730" y="102" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="430" y="122" class="col-txt col-txt">  </text>
+<text x="458" y="122" class="col-txt">first_name</text>
+<text x="730" y="122" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="430" y="142" class="col-txt col-txt">  </text>
+<text x="458" y="142" class="col-txt">last_name</text>
+<text x="730" y="142" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="430" y="162" class="col-txt col-txt">  </text>
+<text x="458" y="162" class="col-txt">middle_name</text>
+<text x="730" y="162" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="430" y="182" class="col-txt col-txt">  </text>
+<text x="458" y="182" class="col-txt">birth_date</text>
+<text x="730" y="182" class="col-txt type" text-anchor="end">DATE</text>
+<text x="430" y="202" class="col-txt col-txt">  </text>
+<text x="458" y="202" class="col-txt">birth_place</text>
+<text x="730" y="202" class="col-txt type" text-anchor="end">VARCHAR(255)</text>
+<text x="430" y="222" class="col-txt col-txt">  </text>
+<text x="458" y="222" class="col-txt">gender</text>
+<text x="730" y="222" class="col-txt type" text-anchor="end">CHAR(1)</text>
+<rect x="420" y="310" width="320" height="174" rx="6" fill="#eef9f2" stroke="#0b532c" stroke-width="1.5" />
+<path d="M 420 316 Q 420 310 426 310 L 734 310 Q 740 310 740 316 L 740 336 L 420 336 Z" fill="#107c41" />
+<text x="430" y="328" class="tbl-title">app.digital_profiles</text>
+<text x="430" y="352" class="col-txt pk">PK</text>
+<text x="458" y="352" class="col-txt">profile_id</text>
+<text x="730" y="352" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="430" y="372" class="col-txt fk">FK</text>
+<text x="458" y="372" class="col-txt">citizen_id</text>
+<text x="730" y="372" class="col-txt type" text-anchor="end">BIGINT (UQ)</text>
+<text x="430" y="392" class="col-txt uq">UQ</text>
+<text x="458" y="392" class="col-txt">snils</text>
+<text x="730" y="392" class="col-txt type" text-anchor="end">CHAR(11)</text>
+<text x="430" y="412" class="col-txt uq">UQ</text>
+<text x="458" y="412" class="col-txt">inn</text>
+<text x="730" y="412" class="col-txt type" text-anchor="end">VARCHAR(12)</text>
+<text x="430" y="432" class="col-txt fk">FK</text>
+<text x="458" y="432" class="col-txt">trust_level_id</text>
+<text x="730" y="432" class="col-txt type" text-anchor="end">INT</text>
+<text x="430" y="452" class="col-txt col-txt">  </text>
+<text x="458" y="452" class="col-txt">profile_status</text>
+<text x="730" y="452" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<text x="430" y="472" class="col-txt col-txt">  </text>
+<text x="458" y="472" class="col-txt">verified_at</text>
+<text x="730" y="472" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<rect x="420" y="570" width="320" height="174" rx="6" fill="#eef9f2" stroke="#0b532c" stroke-width="1.5" />
+<path d="M 420 576 Q 420 570 426 570 L 734 570 Q 740 570 740 576 L 740 596 L 420 596 Z" fill="#107c41" />
+<text x="430" y="588" class="tbl-title">app.electronic_passports</text>
+<text x="430" y="612" class="col-txt pk">PK</text>
+<text x="458" y="612" class="col-txt">passport_id</text>
+<text x="730" y="612" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="430" y="632" class="col-txt fk">FK</text>
+<text x="458" y="632" class="col-txt">citizen_id</text>
+<text x="730" y="632" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="430" y="652" class="col-txt fk">FK</text>
+<text x="458" y="652" class="col-txt">doc_type_id</text>
+<text x="730" y="652" class="col-txt type" text-anchor="end">INT</text>
+<text x="430" y="672" class="col-txt uq">UQ</text>
+<text x="458" y="672" class="col-txt">chip_uid</text>
+<text x="730" y="672" class="col-txt type" text-anchor="end">VARCHAR(64)</text>
+<text x="430" y="692" class="col-txt uq">UQ</text>
+<text x="458" y="692" class="col-txt">series, number</text>
+<text x="730" y="692" class="col-txt type" text-anchor="end">CHAR(4), CHAR(6)</text>
+<text x="430" y="712" class="col-txt col-txt">  </text>
+<text x="458" y="712" class="col-txt">encrypted_chip_payload</text>
+<text x="730" y="712" class="col-txt type" text-anchor="end">BYTEA [pgcrypto]</text>
+<text x="430" y="732" class="col-txt col-txt">  </text>
+<text x="458" y="732" class="col-txt">is_active</text>
+<text x="730" y="732" class="col-txt type" text-anchor="end">BOOLEAN</text>
+<rect x="420" y="820" width="320" height="174" rx="6" fill="#eef9f2" stroke="#0b532c" stroke-width="1.5" />
+<path d="M 420 826 Q 420 820 426 820 L 734 820 Q 740 820 740 826 L 740 846 L 420 846 Z" fill="#107c41" />
+<text x="430" y="838" class="tbl-title">app.biometric_templates</text>
+<text x="430" y="862" class="col-txt pk">PK</text>
+<text x="458" y="862" class="col-txt">biometric_id</text>
+<text x="730" y="862" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="430" y="882" class="col-txt fk">FK</text>
+<text x="458" y="882" class="col-txt">citizen_id</text>
+<text x="730" y="882" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="430" y="902" class="col-txt fk">FK</text>
+<text x="458" y="902" class="col-txt">modality_id</text>
+<text x="730" y="902" class="col-txt type" text-anchor="end">INT</text>
+<text x="430" y="922" class="col-txt uq">UQ</text>
+<text x="458" y="922" class="col-txt">template_hash</text>
+<text x="730" y="922" class="col-txt type" text-anchor="end">CHAR(64)</text>
+<text x="430" y="942" class="col-txt col-txt">  </text>
+<text x="458" y="942" class="col-txt">encrypted_template</text>
+<text x="730" y="942" class="col-txt type" text-anchor="end">BYTEA [pgcrypto]</text>
+<text x="430" y="962" class="col-txt col-txt">  </text>
+<text x="458" y="962" class="col-txt">quality_score</text>
+<text x="730" y="962" class="col-txt type" text-anchor="end">NUMERIC(5,2)</text>
+<text x="430" y="982" class="col-txt col-txt">  </text>
+<text x="458" y="982" class="col-txt">status</text>
+<text x="730" y="982" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<rect x="820" y="160" width="320" height="174" rx="6" fill="#eef9f2" stroke="#0b532c" stroke-width="1.5" />
+<path d="M 820 166 Q 820 160 826 160 L 1134 160 Q 1140 160 1140 166 L 1140 186 L 820 186 Z" fill="#107c41" />
+<text x="830" y="178" class="tbl-title">app.access_consents</text>
+<text x="830" y="202" class="col-txt pk">PK</text>
+<text x="858" y="202" class="col-txt">consent_id</text>
+<text x="1130" y="202" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="830" y="222" class="col-txt fk">FK</text>
+<text x="858" y="222" class="col-txt">profile_id</text>
+<text x="1130" y="222" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="830" y="242" class="col-txt fk">FK</text>
+<text x="858" y="242" class="col-txt">agency_id</text>
+<text x="1130" y="242" class="col-txt type" text-anchor="end">INT</text>
+<text x="830" y="262" class="col-txt col-txt">  </text>
+<text x="858" y="262" class="col-txt">scope</text>
+<text x="1130" y="262" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="830" y="282" class="col-txt col-txt">  </text>
+<text x="858" y="282" class="col-txt">granted_at</text>
+<text x="1130" y="282" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="830" y="302" class="col-txt col-txt">  </text>
+<text x="858" y="302" class="col-txt">valid_until</text>
+<text x="1130" y="302" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="830" y="322" class="col-txt col-txt">  </text>
+<text x="858" y="322" class="col-txt">is_revoked</text>
+<text x="1130" y="322" class="col-txt type" text-anchor="end">BOOLEAN</text>
+<rect x="820" y="430" width="320" height="174" rx="6" fill="#eef9f2" stroke="#0b532c" stroke-width="1.5" />
+<path d="M 820 436 Q 820 430 826 430 L 1134 430 Q 1140 430 1140 436 L 1140 456 L 820 456 Z" fill="#107c41" />
+<text x="830" y="448" class="tbl-title">app.access_tokens</text>
+<text x="830" y="472" class="col-txt pk">PK</text>
+<text x="858" y="472" class="col-txt">token_id</text>
+<text x="1130" y="472" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="830" y="492" class="col-txt fk">FK</text>
+<text x="858" y="492" class="col-txt">profile_id</text>
+<text x="1130" y="492" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="830" y="512" class="col-txt fk">FK</text>
+<text x="858" y="512" class="col-txt">agency_id</text>
+<text x="1130" y="512" class="col-txt type" text-anchor="end">INT</text>
+<text x="830" y="532" class="col-txt fk">FK</text>
+<text x="858" y="532" class="col-txt">required_trust_level_id</text>
+<text x="1130" y="532" class="col-txt type" text-anchor="end">INT</text>
+<text x="830" y="552" class="col-txt uq">UQ</text>
+<text x="858" y="552" class="col-txt">token_hash</text>
+<text x="1130" y="552" class="col-txt type" text-anchor="end">CHAR(64)</text>
+<text x="830" y="572" class="col-txt col-txt">  </text>
+<text x="858" y="572" class="col-txt">expires_at</text>
+<text x="1130" y="572" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="830" y="592" class="col-txt col-txt">  </text>
+<text x="858" y="592" class="col-txt">status</text>
+<text x="1130" y="592" class="col-txt type" text-anchor="end">VARCHAR(20)</text>
+<rect x="1220" y="60" width="300" height="154" rx="6" fill="#fcf0ed" stroke="#7a2f1c" stroke-width="1.5" />
+<path d="M 1220 66 Q 1220 60 1226 60 L 1514 60 Q 1520 60 1520 66 L 1520 86 L 1220 86 Z" fill="#b7472a" />
+<text x="1230" y="78" class="tbl-title">audit.login_log</text>
+<text x="1230" y="102" class="col-txt pk">PK</text>
+<text x="1258" y="102" class="col-txt">login_id</text>
+<text x="1510" y="102" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="1230" y="122" class="col-txt col-txt">  </text>
+<text x="1258" y="122" class="col-txt">login_time</text>
+<text x="1510" y="122" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="1230" y="142" class="col-txt col-txt">  </text>
+<text x="1258" y="142" class="col-txt">username</text>
+<text x="1510" y="142" class="col-txt type" text-anchor="end">TEXT</text>
+<text x="1230" y="162" class="col-txt col-txt">  </text>
+<text x="1258" y="162" class="col-txt">client_ip</text>
+<text x="1510" y="162" class="col-txt type" text-anchor="end">INET</text>
+<text x="1230" y="182" class="col-txt col-txt">  </text>
+<text x="1258" y="182" class="col-txt">auth_method</text>
+<text x="1510" y="182" class="col-txt type" text-anchor="end">VARCHAR(50)</text>
+<text x="1230" y="202" class="col-txt col-txt">  </text>
+<text x="1258" y="202" class="col-txt">session_status</text>
+<text x="1510" y="202" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<rect x="1220" y="280" width="300" height="214" rx="6" fill="#fcf0ed" stroke="#7a2f1c" stroke-width="1.5" />
+<path d="M 1220 286 Q 1220 280 1226 280 L 1514 280 Q 1520 280 1520 286 L 1520 306 L 1220 306 Z" fill="#b7472a" />
+<text x="1230" y="298" class="tbl-title">audit.change_log</text>
+<text x="1230" y="322" class="col-txt pk">PK</text>
+<text x="1258" y="322" class="col-txt">change_id</text>
+<text x="1510" y="322" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="1230" y="342" class="col-txt col-txt">  </text>
+<text x="1258" y="342" class="col-txt">changed_at</text>
+<text x="1510" y="342" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="1230" y="362" class="col-txt col-txt">  </text>
+<text x="1258" y="362" class="col-txt">username</text>
+<text x="1510" y="362" class="col-txt type" text-anchor="end">TEXT</text>
+<text x="1230" y="382" class="col-txt col-txt">  </text>
+<text x="1258" y="382" class="col-txt">table_schema</text>
+<text x="1510" y="382" class="col-txt type" text-anchor="end">TEXT</text>
+<text x="1230" y="402" class="col-txt col-txt">  </text>
+<text x="1258" y="402" class="col-txt">table_name</text>
+<text x="1510" y="402" class="col-txt type" text-anchor="end">TEXT</text>
+<text x="1230" y="422" class="col-txt col-txt">  </text>
+<text x="1258" y="422" class="col-txt">operation</text>
+<text x="1510" y="422" class="col-txt type" text-anchor="end">VARCHAR(10)</text>
+<text x="1230" y="442" class="col-txt col-txt">  </text>
+<text x="1258" y="442" class="col-txt">row_id</text>
+<text x="1510" y="442" class="col-txt type" text-anchor="end">TEXT</text>
+<text x="1230" y="462" class="col-txt col-txt">  </text>
+<text x="1258" y="462" class="col-txt">old_data</text>
+<text x="1510" y="462" class="col-txt type" text-anchor="end">JSONB</text>
+<text x="1230" y="482" class="col-txt col-txt">  </text>
+<text x="1258" y="482" class="col-txt">new_data</text>
+<text x="1510" y="482" class="col-txt type" text-anchor="end">JSONB</text>
+<rect x="1220" y="560" width="300" height="174" rx="6" fill="#fcf0ed" stroke="#7a2f1c" stroke-width="1.5" />
+<path d="M 1220 566 Q 1220 560 1226 560 L 1514 560 Q 1520 560 1520 566 L 1520 586 L 1220 586 Z" fill="#b7472a" />
+<text x="1230" y="578" class="tbl-title">audit.biometric_verifications</text>
+<text x="1230" y="602" class="col-txt pk">PK</text>
+<text x="1258" y="602" class="col-txt">verification_id</text>
+<text x="1510" y="602" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="1230" y="622" class="col-txt col-txt">  </text>
+<text x="1258" y="622" class="col-txt">verified_at</text>
+<text x="1510" y="622" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="1230" y="642" class="col-txt fk">FK</text>
+<text x="1258" y="642" class="col-txt">citizen_id</text>
+<text x="1510" y="642" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="1230" y="662" class="col-txt fk">FK</text>
+<text x="1258" y="662" class="col-txt">modality_id</text>
+<text x="1510" y="662" class="col-txt type" text-anchor="end">INT</text>
+<text x="1230" y="682" class="col-txt fk">FK</text>
+<text x="1258" y="682" class="col-txt">agency_id</text>
+<text x="1510" y="682" class="col-txt type" text-anchor="end">INT</text>
+<text x="1230" y="702" class="col-txt col-txt">  </text>
+<text x="1258" y="702" class="col-txt">similarity_score</text>
+<text x="1510" y="702" class="col-txt type" text-anchor="end">NUMERIC(5,4)</text>
+<text x="1230" y="722" class="col-txt col-txt">  </text>
+<text x="1258" y="722" class="col-txt">decision</text>
+<text x="1510" y="722" class="col-txt type" text-anchor="end">VARCHAR(30)</text>
+<rect x="1220" y="820" width="300" height="154" rx="6" fill="#f5f0fa" stroke="#4d3370" stroke-width="1.5" />
+<path d="M 1220 826 Q 1220 820 1226 820 L 1514 820 Q 1520 820 1520 826 L 1520 846 L 1220 846 Z" fill="#744da9" />
+<text x="1230" y="838" class="tbl-title">stg.passport_batch_import</text>
+<text x="1230" y="862" class="col-txt pk">PK</text>
+<text x="1258" y="862" class="col-txt">import_id</text>
+<text x="1510" y="862" class="col-txt type" text-anchor="end">BIGINT</text>
+<text x="1230" y="882" class="col-txt col-txt">  </text>
+<text x="1258" y="882" class="col-txt">batch_uuid</text>
+<text x="1510" y="882" class="col-txt type" text-anchor="end">UUID</text>
+<text x="1230" y="902" class="col-txt col-txt">  </text>
+<text x="1258" y="902" class="col-txt">source_system</text>
+<text x="1510" y="902" class="col-txt type" text-anchor="end">VARCHAR(100)</text>
+<text x="1230" y="922" class="col-txt col-txt">  </text>
+<text x="1258" y="922" class="col-txt">raw_payload</text>
+<text x="1510" y="922" class="col-txt type" text-anchor="end">JSONB</text>
+<text x="1230" y="942" class="col-txt col-txt">  </text>
+<text x="1258" y="942" class="col-txt">loaded_at</text>
+<text x="1510" y="942" class="col-txt type" text-anchor="end">TIMESTAMPTZ</text>
+<text x="1230" y="962" class="col-txt col-txt">  </text>
+<text x="1258" y="962" class="col-txt">status</text>
+<text x="1510" y="962" class="col-txt type" text-anchor="end">VARCHAR(20)</text>
+<path d="M 340 127.0 C 380.0 127.0, 380.0 397.0, 420 397.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="127.0" r="3" fill="#2b5797" />
+<circle cx="420" cy="397.0" r="3" fill="#b7472a" />
+<path d="M 420 147.0 C 580.0 147.0, 580.0 397.0, 740 397.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="420" cy="147.0" r="3" fill="#2b5797" />
+<circle cx="740" cy="397.0" r="3" fill="#b7472a" />
+<path d="M 420 147.0 C 580.0 147.0, 580.0 657.0, 740 657.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="420" cy="147.0" r="3" fill="#2b5797" />
+<circle cx="740" cy="657.0" r="3" fill="#b7472a" />
+<path d="M 340 317.0 C 380.0 317.0, 380.0 657.0, 420 657.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="317.0" r="3" fill="#2b5797" />
+<circle cx="420" cy="657.0" r="3" fill="#b7472a" />
+<path d="M 420 147.0 C 580.0 147.0, 580.0 907.0, 740 907.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="420" cy="147.0" r="3" fill="#2b5797" />
+<circle cx="740" cy="907.0" r="3" fill="#b7472a" />
+<path d="M 340 517.0 C 380.0 517.0, 380.0 907.0, 420 907.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="517.0" r="3" fill="#2b5797" />
+<circle cx="420" cy="907.0" r="3" fill="#b7472a" />
+<path d="M 740 397.0 C 780.0 397.0, 780.0 247.0, 820 247.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="740" cy="397.0" r="3" fill="#2b5797" />
+<circle cx="820" cy="247.0" r="3" fill="#b7472a" />
+<path d="M 340 727.0 C 580.0 727.0, 580.0 247.0, 820 247.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="727.0" r="3" fill="#2b5797" />
+<circle cx="820" cy="247.0" r="3" fill="#b7472a" />
+<path d="M 740 397.0 C 780.0 397.0, 780.0 517.0, 820 517.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="740" cy="397.0" r="3" fill="#2b5797" />
+<circle cx="820" cy="517.0" r="3" fill="#b7472a" />
+<path d="M 340 727.0 C 580.0 727.0, 580.0 517.0, 820 517.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="727.0" r="3" fill="#2b5797" />
+<circle cx="820" cy="517.0" r="3" fill="#b7472a" />
+<path d="M 740 147.0 C 980.0 147.0, 980.0 647.0, 1220 647.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="740" cy="147.0" r="3" fill="#2b5797" />
+<circle cx="1220" cy="647.0" r="3" fill="#b7472a" />
+<path d="M 340 517.0 C 780.0 517.0, 780.0 647.0, 1220 647.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="517.0" r="3" fill="#2b5797" />
+<circle cx="1220" cy="647.0" r="3" fill="#b7472a" />
+<path d="M 340 727.0 C 780.0 727.0, 780.0 647.0, 1220 647.0" class="conn-line" marker-end="url(#arrow)" />
+<circle cx="340" cy="727.0" r="3" fill="#2b5797" />
+<circle cx="1220" cy="647.0" r="3" fill="#b7472a" />
+</svg>
