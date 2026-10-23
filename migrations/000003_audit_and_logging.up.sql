@@ -74,23 +74,28 @@ END;
 $$;
 COMMENT ON FUNCTION audit.fn_log_change() IS 'Триггерная SECURITY DEFINER функция фиксации DML операций в change_log';
 
--- Привязка триггеров к критическим таблицам
+-- Привязка триггеров к критическим таблицам (с безопасным пересозданием)
+DROP TRIGGER IF EXISTS trg_audit_citizens ON app.citizens;
 CREATE TRIGGER trg_audit_citizens
     AFTER INSERT OR UPDATE OR DELETE ON app.citizens
     FOR EACH ROW EXECUTE FUNCTION audit.fn_log_change();
 
+DROP TRIGGER IF EXISTS trg_audit_digital_profiles ON app.digital_profiles;
 CREATE TRIGGER trg_audit_digital_profiles
     AFTER INSERT OR UPDATE OR DELETE ON app.digital_profiles
     FOR EACH ROW EXECUTE FUNCTION audit.fn_log_change();
 
+DROP TRIGGER IF EXISTS trg_audit_electronic_passports ON app.electronic_passports;
 CREATE TRIGGER trg_audit_electronic_passports
     AFTER INSERT OR UPDATE OR DELETE ON app.electronic_passports
     FOR EACH ROW EXECUTE FUNCTION audit.fn_log_change();
 
+DROP TRIGGER IF EXISTS trg_audit_biometric_templates ON app.biometric_templates;
 CREATE TRIGGER trg_audit_biometric_templates
     AFTER INSERT OR UPDATE OR DELETE ON app.biometric_templates
     FOR EACH ROW EXECUTE FUNCTION audit.fn_log_change();
 
+DROP TRIGGER IF EXISTS trg_audit_access_consents ON app.access_consents;
 CREATE TRIGGER trg_audit_access_consents
     AFTER INSERT OR UPDATE OR DELETE ON app.access_consents
     FOR EACH ROW EXECUTE FUNCTION audit.fn_log_change();

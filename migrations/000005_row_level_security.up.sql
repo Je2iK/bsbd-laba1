@@ -19,6 +19,7 @@ ALTER TABLE app.biometric_templates FORCE ROW LEVEL SECURITY;
 -- ----------------------------------------------------------------------------
 
 -- Администраторы и владельцы имеют полный доступ
+DROP POLICY IF EXISTS p_admin_profiles ON app.digital_profiles;
 CREATE POLICY p_admin_profiles ON app.digital_profiles
     FOR ALL
     TO app_owner, dml_admin
@@ -26,6 +27,7 @@ CREATE POLICY p_admin_profiles ON app.digital_profiles
     WITH CHECK (TRUE);
 
 -- Чтение профиля гражданином (только свой профиль)
+DROP POLICY IF EXISTS p_citizen_read_own_profile ON app.digital_profiles;
 CREATE POLICY p_citizen_read_own_profile ON app.digital_profiles
     FOR SELECT
     TO PUBLIC
@@ -34,6 +36,7 @@ CREATE POLICY p_citizen_read_own_profile ON app.digital_profiles
     );
 
 -- Межведомственный доступ: проверка уровня доверия и согласия
+DROP POLICY IF EXISTS p_agency_read_profile ON app.digital_profiles;
 CREATE POLICY p_agency_read_profile ON app.digital_profiles
     FOR SELECT
     TO app_reader, app_writer
@@ -57,6 +60,7 @@ CREATE POLICY p_agency_read_profile ON app.digital_profiles
 -- 2. ПОЛИТИКИ ДЛЯ ЭЛЕКТРОННЫХ ПАСПОРТОВ (app.electronic_passports)
 -- ----------------------------------------------------------------------------
 
+DROP POLICY IF EXISTS p_admin_passports ON app.electronic_passports;
 CREATE POLICY p_admin_passports ON app.electronic_passports
     FOR ALL
     TO app_owner, dml_admin
@@ -64,6 +68,7 @@ CREATE POLICY p_admin_passports ON app.electronic_passports
     WITH CHECK (TRUE);
 
 -- Гражданин видит статус и данные только своего паспорта
+DROP POLICY IF EXISTS p_citizen_read_own_passport ON app.electronic_passports;
 CREATE POLICY p_citizen_read_own_passport ON app.electronic_passports
     FOR SELECT
     TO PUBLIC
@@ -72,6 +77,7 @@ CREATE POLICY p_citizen_read_own_passport ON app.electronic_passports
     );
 
 -- Доступ ведомств к паспортам: только при подтвержденном уровне доверия (>= 3) и согласии
+DROP POLICY IF EXISTS p_agency_verify_passports ON app.electronic_passports;
 CREATE POLICY p_agency_verify_passports ON app.electronic_passports
     FOR SELECT
     TO app_reader, app_writer
@@ -93,6 +99,7 @@ CREATE POLICY p_agency_verify_passports ON app.electronic_passports
 -- 3. ПОЛИТИКИ ДЛЯ БИОМЕТРИЧЕСКИХ ДАННЫХ (app.biometric_templates)
 -- ----------------------------------------------------------------------------
 
+DROP POLICY IF EXISTS p_admin_biometrics ON app.biometric_templates;
 CREATE POLICY p_admin_biometrics ON app.biometric_templates
     FOR ALL
     TO app_owner, dml_admin
@@ -100,6 +107,7 @@ CREATE POLICY p_admin_biometrics ON app.biometric_templates
     WITH CHECK (TRUE);
 
 -- Гражданин может просматривать статус наличия своих биометрических шаблонов
+DROP POLICY IF EXISTS p_citizen_read_own_biometrics ON app.biometric_templates;
 CREATE POLICY p_citizen_read_own_biometrics ON app.biometric_templates
     FOR SELECT
     TO PUBLIC
@@ -108,6 +116,7 @@ CREATE POLICY p_citizen_read_own_biometrics ON app.biometric_templates
     );
 
 -- Ведомства: доступ к биометрии строго на биометрическом уровне доверия (уровень 4) и при согласии
+DROP POLICY IF EXISTS p_agency_match_biometrics ON app.biometric_templates;
 CREATE POLICY p_agency_match_biometrics ON app.biometric_templates
     FOR SELECT
     TO app_reader, app_writer
