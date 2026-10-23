@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS app.access_tokens (
     profile_id BIGINT NOT NULL REFERENCES app.digital_profiles(profile_id) ON DELETE RESTRICT,
     agency_id INT NOT NULL REFERENCES ref.agencies(agency_id) ON DELETE RESTRICT,
     required_trust_level_id INT NOT NULL REFERENCES ref.trust_levels(trust_level_id) ON DELETE RESTRICT,
-    token_hash CHAR(64) NOT NULL UNIQUE,
+    token_hash VARCHAR(128) NOT NULL UNIQUE,
     issued_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     expires_at TIMESTAMPTZ NOT NULL CHECK (expires_at > issued_at),
     status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'EXPIRED', 'REVOKED'))
