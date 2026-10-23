@@ -58,6 +58,9 @@ migrate-down:
 migrate-version:
 	$(COMPOSE) run --rm migrate version
 
+migrate-force:
+	$(COMPOSE) run --rm migrate force 1
+
 migrate-drop:
 	$(COMPOSE) run --rm migrate drop -f
 
