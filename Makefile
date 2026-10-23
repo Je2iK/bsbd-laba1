@@ -59,10 +59,11 @@ migrate-version:
 	$(COMPOSE) run --rm migrate version
 
 migrate-force:
-	$(COMPOSE) run --rm migrate force 0
+	$(COMPOSE) run --rm migrate force 1
 
 migrate-drop:
-	$(COMPOSE) run --rm migrate drop -f
+	$(COMPOSE) exec -T postgres psql -U $(DB_USER) -d $(DB_NAME) -c "DROP SCHEMA IF EXISTS app, ref, audit, stg CASCADE; DROP TABLE IF EXISTS schema_migrations CASCADE;"
+	@echo "Схемы и таблица миграций успешно сброшены."
 
 psql:
 	$(COMPOSE) exec -it postgres psql -U $(DB_USER) -d $(DB_NAME)
