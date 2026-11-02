@@ -130,48 +130,51 @@ ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
 
 
 -- ----------------------------------------------------------------------------
--- 4. ТЕСТОВЫЕ ЛОГИН-ПОЛЬЗОВАТЕЛИ
+-- 4. ТЕСТОВЫЕ ЛОГИН-ПОЛЬЗОВАТЕЛИ (NOINHERIT ПО ТРЕБОВАНИЯМ ТЗ)
 -- ----------------------------------------------------------------------------
 
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_reader') THEN
-        CREATE ROLE usr_reader WITH LOGIN PASSWORD 'ReaderPass123!' INHERIT;
+        CREATE ROLE usr_reader WITH LOGIN PASSWORD 'ReaderPass123!' NOINHERIT;
         GRANT app_reader TO usr_reader;
     ELSE
-        ALTER ROLE usr_reader INHERIT;
+        ALTER ROLE usr_reader NOINHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_writer') THEN
-        CREATE ROLE usr_writer WITH LOGIN PASSWORD 'WriterPass123!' INHERIT;
+        CREATE ROLE usr_writer WITH LOGIN PASSWORD 'WriterPass123!' NOINHERIT;
         GRANT app_writer TO usr_writer;
     ELSE
-        ALTER ROLE usr_writer INHERIT;
+        ALTER ROLE usr_writer NOINHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_auditor') THEN
-        CREATE ROLE usr_auditor WITH LOGIN PASSWORD 'AuditorPass123!' INHERIT;
+        CREATE ROLE usr_auditor WITH LOGIN PASSWORD 'AuditorPass123!' NOINHERIT;
         GRANT auditor TO usr_auditor;
     ELSE
-        ALTER ROLE usr_auditor INHERIT;
+        ALTER ROLE usr_auditor NOINHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_dml') THEN
-        CREATE ROLE usr_dml WITH LOGIN PASSWORD 'DmlAdminPass123!' INHERIT;
+        CREATE ROLE usr_dml WITH LOGIN PASSWORD 'DmlAdminPass123!' NOINHERIT;
         GRANT dml_admin TO usr_dml;
     ELSE
-        ALTER ROLE usr_dml INHERIT;
+        ALTER ROLE usr_dml NOINHERIT;
     END IF;
 
-    -- Административные логин-роли создаются с NOINHERIT для соблюдения Separation of Duties (SoD)
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_ddl') THEN
         CREATE ROLE usr_ddl WITH LOGIN PASSWORD 'DdlAdminPass123!' NOINHERIT;
         GRANT ddl_admin TO usr_ddl;
+    ELSE
+        ALTER ROLE usr_ddl NOINHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_sec') THEN
         CREATE ROLE usr_sec WITH LOGIN PASSWORD 'SecAdminPass123!' NOINHERIT;
         GRANT security_admin TO usr_sec;
+    ELSE
+        ALTER ROLE usr_sec NOINHERIT;
     END IF;
 END
 $$;

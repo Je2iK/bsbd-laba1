@@ -12,6 +12,7 @@ SELECT extname, extversion FROM pg_extension WHERE extname IN ('pgcrypto', 'pgau
 \echo '1. ТЕСТИРОВАНИЕ РОЛИ app_reader (ТОЛЬКО ЧТЕНИЕ РАЗРЕШЕННЫХ ДАННЫХ)'
 \echo '===================================================================='
 SET ROLE usr_reader;
+SET ROLE app_reader;
 
 \echo '-> Попытка чтения справочника ведомств (Ожидается: УСПЕШНО):'
 SELECT agency_id, agency_code, agency_name, trust_tier FROM ref.agencies LIMIT 3;
@@ -45,6 +46,7 @@ RESET ROLE;
 \echo '2. ТЕСТИРОВАНИЕ РОЛИ app_writer (ВСТАВКА/ОБНОВЛЕНИЕ БЕЗ УДАЛЕНИЯ)'
 \echo '===================================================================='
 SET ROLE usr_writer;
+SET ROLE app_writer;
 
 \echo '-> Добавление нового гражданина (Ожидается: УСПЕШНО):'
 INSERT INTO app.citizens (first_name, last_name, birth_date, birth_place, gender)
@@ -69,6 +71,7 @@ RESET ROLE;
 \echo '3. ТЕСТИРОВАНИЕ РОЛИ auditor (ЧТЕНИЕ АУДИТА, ЗАПРЕТ РУЧНОГО DML)'
 \echo '===================================================================='
 SET ROLE usr_auditor;
+SET ROLE auditor;
 
 \echo '-> Чтение журнала изменений DML (Ожидается: УСПЕШНО):'
 SELECT change_id, changed_at, username, table_name, operation FROM audit.change_log ORDER BY change_id DESC LIMIT 3;
@@ -92,6 +95,7 @@ RESET ROLE;
 \echo '4. ТЕСТИРОВАНИЕ РОЛИ dml_admin (МАССОВЫЙ DML, ЗАПРЕТ ДОСТУПА К AUDIT)'
 \echo '===================================================================='
 SET ROLE usr_dml;
+SET ROLE dml_admin;
 
 \echo '-> Удаление проверочной записи (Ожидается: УСПЕШНО):'
 DELETE FROM app.citizens WHERE first_name = 'Тест_Писатель';
@@ -133,6 +137,7 @@ RESET ROLE;
 \echo '6. ПРОВЕРКА ROW LEVEL SECURITY (RLS) ПО УРОВНЯМ ДОВЕРИЯ'
 \echo '===================================================================='
 SET ROLE usr_reader;
+SET ROLE app_reader;
 
 \echo '-> Проверка RLS: сессия гражданина с ID = 1 (видит только свой профиль):'
 SET app.current_citizen_id = '1';

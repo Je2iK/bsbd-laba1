@@ -62,8 +62,8 @@ def main():
     os.makedirs('images', exist_ok=True)
 
     # 1. app_reader select
-    render_terminal('images/fig02_reader_select.png', 'psql - usr_reader@university_db', [
-        ('cmd', 'SET ROLE usr_reader;'),
+    render_terminal('images/fig02_reader_select.png', 'psql - app_reader@university_db', [
+        ('cmd', 'SET ROLE app_reader;'),
         ('result', 'SET'),
         ('cmd', 'SELECT agency_id, agency_code, agency_name, trust_tier FROM ref.agencies LIMIT 3;'),
         ('result', ' agency_id | agency_code |                      agency_name                      | trust_tier '),
@@ -90,8 +90,8 @@ def main():
     ])
 
     # 4. app_writer insert allowed
-    render_terminal('images/fig05_writer_insert.png', 'psql - usr_writer@university_db', [
-        ('cmd', 'SET ROLE usr_writer;'),
+    render_terminal('images/fig05_writer_insert.png', 'psql - app_writer@university_db', [
+        ('cmd', 'SET ROLE app_writer;'),
         ('result', 'SET'),
         ('cmd', 'INSERT INTO app.citizens (first_name, last_name, birth_date, birth_place, gender)'),
         ('result', "VALUES ('Алексей', 'Морозов', '1998-04-12', 'гор. Новосибирск', 'M') RETURNING citizen_id;"),
@@ -120,8 +120,8 @@ def main():
     ])
 
     # 7. auditor select audit log
-    render_terminal('images/fig08_auditor_select.png', 'psql - usr_auditor@university_db', [
-        ('cmd', 'SET ROLE usr_auditor;'),
+    render_terminal('images/fig08_auditor_select.png', 'psql - auditor@university_db', [
+        ('cmd', 'SET ROLE auditor;'),
         ('result', 'SET'),
         ('cmd', 'SELECT change_id, username, table_name, operation, row_id FROM audit.change_log ORDER BY change_id DESC LIMIT 2;'),
         ('result', ' change_id |  username  | table_name | operation | row_id '),
@@ -240,7 +240,7 @@ def main():
 
     # 20. login entries
     render_terminal('images/fig21_login_entries.png', 'psql - audit.login_log Verification', [
-        ('cmd', 'SET ROLE usr_auditor;'),
+        ('cmd', 'SET ROLE auditor;'),
         ('result', 'SET'),
         ('cmd', 'SELECT login_id, login_time, username, client_ip, auth_method, session_status FROM audit.login_log ORDER BY login_id DESC LIMIT 4;'),
         ('result', ' login_id |       login_time       |  username   |   client_ip   |   auth_method   | session_status '),
