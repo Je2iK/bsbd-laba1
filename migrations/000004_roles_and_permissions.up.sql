@@ -130,31 +130,40 @@ ALTER DEFAULT PRIVILEGES FOR ROLE app_owner IN SCHEMA app
 
 
 -- ----------------------------------------------------------------------------
--- 4. ТЕСТОВЫЕ ЛОГИН-ПОЛЬЗОВАТЕЛИ (NOINHERIT)
+-- 4. ТЕСТОВЫЕ ЛОГИН-ПОЛЬЗОВАТЕЛИ
 -- ----------------------------------------------------------------------------
 
 DO $$
 BEGIN
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_reader') THEN
-        CREATE ROLE usr_reader WITH LOGIN PASSWORD 'ReaderPass123!' NOINHERIT;
+        CREATE ROLE usr_reader WITH LOGIN PASSWORD 'ReaderPass123!' INHERIT;
         GRANT app_reader TO usr_reader;
+    ELSE
+        ALTER ROLE usr_reader INHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_writer') THEN
-        CREATE ROLE usr_writer WITH LOGIN PASSWORD 'WriterPass123!' NOINHERIT;
+        CREATE ROLE usr_writer WITH LOGIN PASSWORD 'WriterPass123!' INHERIT;
         GRANT app_writer TO usr_writer;
+    ELSE
+        ALTER ROLE usr_writer INHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_auditor') THEN
-        CREATE ROLE usr_auditor WITH LOGIN PASSWORD 'AuditorPass123!' NOINHERIT;
+        CREATE ROLE usr_auditor WITH LOGIN PASSWORD 'AuditorPass123!' INHERIT;
         GRANT auditor TO usr_auditor;
+    ELSE
+        ALTER ROLE usr_auditor INHERIT;
     END IF;
 
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_dml') THEN
-        CREATE ROLE usr_dml WITH LOGIN PASSWORD 'DmlAdminPass123!' NOINHERIT;
+        CREATE ROLE usr_dml WITH LOGIN PASSWORD 'DmlAdminPass123!' INHERIT;
         GRANT dml_admin TO usr_dml;
+    ELSE
+        ALTER ROLE usr_dml INHERIT;
     END IF;
 
+    -- Административные логин-роли создаются с NOINHERIT для соблюдения Separation of Duties (SoD)
     IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = 'usr_ddl') THEN
         CREATE ROLE usr_ddl WITH LOGIN PASSWORD 'DdlAdminPass123!' NOINHERIT;
         GRANT ddl_admin TO usr_ddl;
