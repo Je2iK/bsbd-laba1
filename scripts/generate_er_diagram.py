@@ -1,427 +1,264 @@
 import os
 import subprocess
 
-def generate_svg():
-    # Colors for schemas
-    colors = {
-        'ref':   {'header': '#23497d', 'bg': '#f4f7fb', 'border': '#1e395b', 'badge': '#23497d'},
-        'app':   {'header': '#0e6936', 'bg': '#f0f9f3', 'border': '#0b532c', 'badge': '#0e6936'},
-        'audit': {'header': '#9c381e', 'bg': '#fdf2ef', 'border': '#7a2f1c', 'badge': '#9c381e'},
-        'stg':   {'header': '#613d91', 'bg': '#f7f3fb', 'border': '#4d3370', 'badge': '#613d91'},
-    }
-
-    # Table definitions
+def generate_perfect_bw_er():
     tables = [
-        # REF (Col 1: x = 60, w = 310)
+        # Col 1: REF (x = 40, w = 230)
         {
-            'schema': 'ref', 'name': 'trust_levels', 'x': 60, 'y': 70, 'w': 310,
-            'cols': [
-                ('PK', 'trust_level_id', 'INT'),
-                ('UQ', 'code', 'VARCHAR(30)'),
-                ('  ', 'name', 'VARCHAR(100)'),
-                ('  ', 'auth_factor_min', 'INT'),
-                ('  ', 'description', 'TEXT'),
-                ('  ', 'is_active', 'BOOLEAN'),
-            ]
+            'schema': 'ref', 'name': 'trust_levels', 'x': 40, 'y': 40, 'w': 230,
+            'cols': ['trust_level_id', 'code', 'name', 'auth_factor_min', 'description', 'is_active'],
+            'pks': ['trust_level_id'], 'fks': []
         },
         {
-            'schema': 'ref', 'name': 'document_types', 'x': 60, 'y': 290, 'w': 310,
-            'cols': [
-                ('PK', 'doc_type_id', 'INT'),
-                ('UQ', 'type_code', 'VARCHAR(30)'),
-                ('  ', 'type_name', 'VARCHAR(150)'),
-                ('  ', 'has_rfid_chip', 'BOOLEAN'),
-                ('  ', 'validity_years', 'INT'),
-            ]
+            'schema': 'ref', 'name': 'document_types', 'x': 40, 'y': 240, 'w': 230,
+            'cols': ['doc_type_id', 'type_code', 'type_name', 'has_rfid_chip', 'validity_years'],
+            'pks': ['doc_type_id'], 'fks': []
         },
         {
-            'schema': 'ref', 'name': 'biometric_modalities', 'x': 60, 'y': 510, 'w': 310,
-            'cols': [
-                ('PK', 'modality_id', 'INT'),
-                ('UQ', 'code', 'VARCHAR(30)'),
-                ('  ', 'name', 'VARCHAR(100)'),
-                ('  ', 'iso_standard', 'VARCHAR(100)'),
-                ('  ', 'far_limit', 'NUMERIC(8,6)'),
-                ('  ', 'frr_limit', 'NUMERIC(8,6)'),
-            ]
+            'schema': 'ref', 'name': 'biometric_modalities', 'x': 40, 'y': 440, 'w': 230,
+            'cols': ['modality_id', 'code', 'name', 'iso_standard', 'far_limit', 'frr_limit'],
+            'pks': ['modality_id'], 'fks': []
         },
         {
-            'schema': 'ref', 'name': 'agencies', 'x': 60, 'y': 760, 'w': 310,
-            'cols': [
-                ('PK', 'agency_id', 'INT'),
-                ('UQ', 'agency_code', 'VARCHAR(50)'),
-                ('  ', 'agency_name', 'VARCHAR(255)'),
-                ('UQ', 'inn', 'VARCHAR(12)'),
-                ('UQ', 'ogrn', 'VARCHAR(15)'),
-                ('  ', 'trust_tier', 'INT'),
-                ('  ', 'is_active', 'BOOLEAN'),
-            ]
+            'schema': 'ref', 'name': 'agencies', 'x': 40, 'y': 660, 'w': 230,
+            'cols': ['agency_id', 'agency_code', 'agency_name', 'inn', 'ogrn', 'trust_tier', 'is_active'],
+            'pks': ['agency_id'], 'fks': []
         },
 
-        # APP (Col 2: x = 490, w = 340)
+        # Col 2: APP CORE (x = 350, w = 240)
         {
-            'schema': 'app', 'name': 'citizens', 'x': 490, 'y': 70, 'w': 340,
-            'cols': [
-                ('PK', 'citizen_id', 'BIGINT'),
-                ('  ', 'first_name', 'VARCHAR(100)'),
-                ('  ', 'last_name', 'VARCHAR(100)'),
-                ('  ', 'middle_name', 'VARCHAR(100)'),
-                ('  ', 'birth_date', 'DATE'),
-                ('  ', 'birth_place', 'VARCHAR(255)'),
-                ('  ', 'gender', 'CHAR(1)'),
-                ('  ', 'created_at', 'TIMESTAMPTZ'),
-            ]
+            'schema': 'app', 'name': 'citizens', 'x': 350, 'y': 40, 'w': 240,
+            'cols': ['citizen_id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'birth_place', 'gender', 'created_at'],
+            'pks': ['citizen_id'], 'fks': []
         },
         {
-            'schema': 'app', 'name': 'digital_profiles', 'x': 490, 'y': 330, 'w': 340,
-            'cols': [
-                ('PK', 'profile_id', 'BIGINT'),
-                ('FK', 'citizen_id', 'BIGINT (UQ)'),
-                ('UQ', 'snils', 'CHAR(11)'),
-                ('UQ', 'inn', 'VARCHAR(12)'),
-                ('FK', 'trust_level_id', 'INT'),
-                ('  ', 'profile_status', 'VARCHAR(30)'),
-                ('  ', 'verified_at', 'TIMESTAMPTZ'),
-            ]
+            'schema': 'app', 'name': 'digital_profiles', 'x': 350, 'y': 280, 'w': 240,
+            'cols': ['profile_id', 'citizen_id', 'snils', 'inn', 'trust_level_id', 'profile_status', 'verified_at', 'created_at'],
+            'pks': ['profile_id'], 'fks': ['citizen_id', 'trust_level_id']
         },
         {
-            'schema': 'app', 'name': 'electronic_passports', 'x': 490, 'y': 590, 'w': 340,
-            'cols': [
-                ('PK', 'passport_id', 'BIGINT'),
-                ('FK', 'citizen_id', 'BIGINT'),
-                ('FK', 'doc_type_id', 'INT'),
-                ('UQ', 'chip_uid', 'VARCHAR(64)'),
-                ('UQ', 'series, number', 'CHAR(4), CHAR(6)'),
-                ('  ', 'issue_date', 'DATE'),
-                ('  ', 'expiry_date', 'DATE'),
-                ('  ', 'encrypted_chip_payload', 'BYTEA [pgcrypto]'),
-                ('  ', 'is_active', 'BOOLEAN'),
-            ]
+            'schema': 'app', 'name': 'electronic_passports', 'x': 350, 'y': 520, 'w': 240,
+            'cols': ['passport_id', 'citizen_id', 'doc_type_id', 'chip_uid', 'series', 'number', 'issue_date', 'expiry_date', 'issuing_authority_code', 'encrypted_chip_payload', 'is_active'],
+            'pks': ['passport_id'], 'fks': ['citizen_id', 'doc_type_id']
         },
         {
-            'schema': 'app', 'name': 'biometric_templates', 'x': 490, 'y': 860, 'w': 340,
-            'cols': [
-                ('PK', 'biometric_id', 'BIGINT'),
-                ('FK', 'citizen_id', 'BIGINT'),
-                ('FK', 'modality_id', 'INT'),
-                ('UQ', 'template_hash', 'CHAR(64)'),
-                ('  ', 'encrypted_template', 'BYTEA [pgcrypto]'),
-                ('  ', 'quality_score', 'NUMERIC(5,2)'),
-                ('  ', 'capture_device_id', 'VARCHAR(100)'),
-                ('  ', 'status', 'VARCHAR(30)'),
-            ]
+            'schema': 'app', 'name': 'biometric_templates', 'x': 350, 'y': 820, 'w': 240,
+            'cols': ['biometric_id', 'citizen_id', 'modality_id', 'template_hash', 'encrypted_template', 'quality_score', 'capture_device_id', 'registered_at', 'status'],
+            'pks': ['biometric_id'], 'fks': ['citizen_id', 'modality_id']
         },
 
-        # APP TOKENS & CONSENTS (Col 3: x = 940, w = 330)
+        # Col 3: APP ACCESS & AUDIT VERIF (x = 690, w = 250)
         {
-            'schema': 'app', 'name': 'access_consents', 'x': 940, 'y': 220, 'w': 330,
-            'cols': [
-                ('PK', 'consent_id', 'BIGINT'),
-                ('FK', 'profile_id', 'BIGINT'),
-                ('FK', 'agency_id', 'INT'),
-                ('UQ', '(profile, agency, scope)', ''),
-                ('  ', 'scope', 'VARCHAR(100)'),
-                ('  ', 'granted_at', 'TIMESTAMPTZ'),
-                ('  ', 'valid_until', 'TIMESTAMPTZ'),
-                ('  ', 'is_revoked', 'BOOLEAN'),
-            ]
+            'schema': 'app', 'name': 'access_consents', 'x': 690, 'y': 170, 'w': 250,
+            'cols': ['consent_id', 'profile_id', 'agency_id', 'scope', 'granted_at', 'valid_until', 'is_revoked', 'consent_signature'],
+            'pks': ['consent_id'], 'fks': ['profile_id', 'agency_id']
         },
         {
-            'schema': 'app', 'name': 'access_tokens', 'x': 940, 'y': 520, 'w': 330,
-            'cols': [
-                ('PK', 'token_id', 'BIGINT'),
-                ('FK', 'profile_id', 'BIGINT'),
-                ('FK', 'agency_id', 'INT'),
-                ('FK', 'required_trust_level_id', 'INT'),
-                ('UQ', 'token_hash', 'VARCHAR(128)'),
-                ('  ', 'issued_at', 'TIMESTAMPTZ'),
-                ('  ', 'expires_at', 'TIMESTAMPTZ'),
-                ('  ', 'status', 'VARCHAR(20)'),
-            ]
+            'schema': 'app', 'name': 'access_tokens', 'x': 690, 'y': 410, 'w': 250,
+            'cols': ['token_id', 'profile_id', 'agency_id', 'required_trust_level_id', 'token_hash', 'issued_at', 'expires_at', 'status'],
+            'pks': ['token_id'], 'fks': ['profile_id', 'agency_id', 'required_trust_level_id']
+        },
+        {
+            'schema': 'audit', 'name': 'biometric_verifications', 'x': 690, 'y': 670, 'w': 250,
+            'cols': ['verification_id', 'verified_at', 'citizen_id', 'modality_id', 'agency_id', 'similarity_score', 'decision', 'client_ip'],
+            'pks': ['verification_id'], 'fks': ['citizen_id', 'modality_id', 'agency_id']
         },
 
-        # AUDIT & STG (Col 4: x = 1390, w = 320)
+        # Col 4: AUDIT LOGS & STAGING (x = 1010, w = 240)
         {
-            'schema': 'audit', 'name': 'login_log', 'x': 1390, 'y': 70, 'w': 320,
-            'cols': [
-                ('PK', 'login_id', 'BIGINT'),
-                ('  ', 'login_time', 'TIMESTAMPTZ'),
-                ('  ', 'username', 'TEXT'),
-                ('  ', 'client_ip', 'INET'),
-                ('  ', 'auth_method', 'VARCHAR(50)'),
-                ('  ', 'session_status', 'VARCHAR(30)'),
-            ]
+            'schema': 'audit', 'name': 'login_log', 'x': 1010, 'y': 60, 'w': 240,
+            'cols': ['login_id', 'login_time', 'username', 'client_ip', 'client_port', 'auth_method', 'session_status'],
+            'pks': ['login_id'], 'fks': []
         },
         {
-            'schema': 'audit', 'name': 'change_log', 'x': 1390, 'y': 280, 'w': 320,
-            'cols': [
-                ('PK', 'change_id', 'BIGINT'),
-                ('  ', 'changed_at', 'TIMESTAMPTZ'),
-                ('  ', 'username', 'TEXT'),
-                ('  ', 'table_name', 'TEXT'),
-                ('  ', 'operation', 'VARCHAR(10)'),
-                ('  ', 'row_id', 'TEXT'),
-                ('  ', 'old_data / new_data', 'JSONB'),
-            ]
+            'schema': 'audit', 'name': 'change_log', 'x': 1010, 'y': 280, 'w': 240,
+            'cols': ['change_id', 'changed_at', 'username', 'table_schema', 'table_name', 'operation', 'row_id', 'old_data', 'new_data'],
+            'pks': ['change_id'], 'fks': []
         },
         {
-            'schema': 'audit', 'name': 'biometric_verifications', 'x': 1390, 'y': 550, 'w': 320,
-            'cols': [
-                ('PK', 'verification_id', 'BIGINT'),
-                ('  ', 'verified_at', 'TIMESTAMPTZ'),
-                ('FK', 'citizen_id', 'BIGINT'),
-                ('FK', 'modality_id', 'INT'),
-                ('FK', 'agency_id', 'INT'),
-                ('  ', 'similarity_score', 'NUMERIC(5,4)'),
-                ('  ', 'decision', 'VARCHAR(30)'),
-            ]
-        },
-        {
-            'schema': 'stg', 'name': 'passport_batch_import', 'x': 1390, 'y': 840, 'w': 320,
-            'cols': [
-                ('PK', 'import_id', 'BIGINT'),
-                ('  ', 'batch_uuid', 'UUID'),
-                ('  ', 'source_system', 'VARCHAR(100)'),
-                ('  ', 'raw_payload', 'JSONB'),
-                ('  ', 'loaded_at', 'TIMESTAMPTZ'),
-                ('  ', 'status', 'VARCHAR(20)'),
-            ]
+            'schema': 'stg', 'name': 'passport_batch_import', 'x': 1010, 'y': 560, 'w': 240,
+            'cols': ['import_id', 'batch_uuid', 'source_system', 'raw_payload', 'loaded_at', 'status', 'error_message'],
+            'pks': ['import_id'], 'fks': []
         },
     ]
 
-    # Map tables by full name
-    tbl_map = {f"{t['schema']}.{t['name']}": t for t in tables}
+    header_h = 24
+    row_h = 20
 
-    # All 14 Foreign Keys accurately defined with exact pathing, cardinality and field names
-    fk_links = [
-        # 1. trust_levels -> digital_profiles (1:N)
-        {
-            'src': 'ref.trust_levels', 'dst': 'app.digital_profiles',
-            'fk': 'trust_level_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 120), (430, 120), (430, 420), (490, 420)]
-        },
-        # 2. trust_levels -> access_tokens (1:N)
-        {
-            'src': 'ref.trust_levels', 'dst': 'app.access_tokens',
-            'fk': 'required_trust_level_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 95), (410, 95), (410, 40), (900, 40), (900, 590), (940, 590)]
-        },
-        # 3. citizens -> digital_profiles (1:1 UQ)
-        {
-            'src': 'app.citizens', 'dst': 'app.digital_profiles',
-            'fk': 'citizen_id', 'c_src': '1', 'c_dst': '1', 'color': '#0e6936',
-            'pts': [(660, 255), (660, 330)]
-        },
-        # 4. citizens -> electronic_passports (1:N)
-        {
-            'src': 'app.citizens', 'dst': 'app.electronic_passports',
-            'fk': 'citizen_id', 'c_src': '1', 'c_dst': 'N', 'color': '#0e6936',
-            'pts': [(830, 140), (860, 140), (860, 640), (830, 640)]
-        },
-        # 5. document_types -> electronic_passports (1:N)
-        {
-            'src': 'ref.document_types', 'dst': 'app.electronic_passports',
-            'fk': 'doc_type_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 340), (430, 340), (430, 650), (490, 650)]
-        },
-        # 6. citizens -> biometric_templates (1:N)
-        {
-            'src': 'app.citizens', 'dst': 'app.biometric_templates',
-            'fk': 'citizen_id', 'c_src': '1', 'c_dst': 'N', 'color': '#0e6936',
-            'pts': [(490, 160), (450, 160), (450, 910), (490, 910)]
-        },
-        # 7. biometric_modalities -> biometric_templates (1:N)
-        {
-            'src': 'ref.biometric_modalities', 'dst': 'app.biometric_templates',
-            'fk': 'modality_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 560), (430, 560), (430, 930), (490, 930)]
-        },
-        # 8. digital_profiles -> access_consents (1:N)
-        {
-            'src': 'app.digital_profiles', 'dst': 'app.access_consents',
-            'fk': 'profile_id', 'c_src': '1', 'c_dst': 'N', 'color': '#0e6936',
-            'pts': [(830, 370), (885, 370), (885, 290), (940, 290)]
-        },
-        # 9. agencies -> access_consents (1:N)
-        {
-            'src': 'ref.agencies', 'dst': 'app.access_consents',
-            'fk': 'agency_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 800), (420, 800), (420, 810), (880, 810), (880, 320), (940, 320)]
-        },
-        # 10. digital_profiles -> access_tokens (1:N)
-        {
-            'src': 'app.digital_profiles', 'dst': 'app.access_tokens',
-            'fk': 'profile_id', 'c_src': '1', 'c_dst': 'N', 'color': '#0e6936',
-            'pts': [(830, 400), (885, 400), (885, 560), (940, 560)]
-        },
-        # 11. agencies -> access_tokens (1:N)
-        {
-            'src': 'ref.agencies', 'dst': 'app.access_tokens',
-            'fk': 'agency_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 825), (430, 825), (430, 820), (890, 820), (890, 620), (940, 620)]
-        },
-        # 12. citizens -> biometric_verifications (1:N)
-        {
-            'src': 'app.citizens', 'dst': 'audit.biometric_verifications',
-            'fk': 'citizen_id', 'c_src': '1', 'c_dst': 'N', 'color': '#0e6936',
-            'pts': [(830, 110), (910, 110), (910, 470), (1330, 470), (1330, 615), (1390, 615)]
-        },
-        # 13. biometric_modalities -> biometric_verifications (1:N)
-        {
-            'src': 'ref.biometric_modalities', 'dst': 'audit.biometric_verifications',
-            'fk': 'modality_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 590), (410, 590), (410, 1050), (1340, 1050), (1340, 645), (1390, 645)]
-        },
-        # 14. agencies -> biometric_verifications (1:N)
-        {
-            'src': 'ref.agencies', 'dst': 'audit.biometric_verifications',
-            'fk': 'agency_id', 'c_src': '1', 'c_dst': 'N', 'color': '#23497d',
-            'pts': [(370, 850), (400, 850), (400, 1070), (1350, 1070), (1350, 675), (1390, 675)]
-        },
-    ]
+    def get_row_y(t, col_name):
+        idx = t['cols'].index(col_name)
+        return t['y'] + header_h + idx * row_h + row_h / 2
 
-    svg_width = 1780
-    svg_height = 1120
+    tmap = {f"{t['schema']}.{t['name']}": t for t in tables}
+
+    # Line paths (polylines with right angles)
+    # Target ends get arrow marker
+    polylines = []
+
+    # 1. citizen_id bus:
+    # From app.citizens.citizen_id (350+240=590, y)
+    cit_y = get_row_y(tmap['app.citizens'], 'citizen_id')
+    bus_cit_x = 640
+    # Main trunk
+    polylines.append([(590, cit_y), (bus_cit_x, cit_y), (bus_cit_x, get_row_y(tmap['audit.biometric_verifications'], 'citizen_id'))])
+    # Branch to digital_profiles (citizen_id at left side: x=590 right side, enters at right: (bus_cit_x, dp_y) -> (590, dp_y))
+    dp_cit_y = get_row_y(tmap['app.digital_profiles'], 'citizen_id')
+    polylines.append([(bus_cit_x, dp_cit_y), (590, dp_cit_y)])
+    # Branch to electronic_passports (citizen_id at right side: (bus_cit_x, ep_y) -> (590, ep_y))
+    ep_cit_y = get_row_y(tmap['app.electronic_passports'], 'citizen_id')
+    polylines.append([(bus_cit_x, ep_cit_y), (590, ep_cit_y)])
+    # Branch to biometric_templates (citizen_id at right side: (bus_cit_x, bt_y) -> (590, bt_y))
+    bt_cit_y = get_row_y(tmap['app.biometric_templates'], 'citizen_id')
+    polylines.append([(bus_cit_x, bt_cit_y), (590, bt_cit_y)])
+    # Branch to biometric_verifications (left side: (bus_cit_x, bv_cit_y) -> (690, bv_cit_y))
+    bv_cit_y = get_row_y(tmap['audit.biometric_verifications'], 'citizen_id')
+    polylines.append([(bus_cit_x, bv_cit_y), (690, bv_cit_y)])
+
+    # 2. profile_id bus:
+    # From app.digital_profiles.profile_id (590, dp_prof_y)
+    dp_prof_y = get_row_y(tmap['app.digital_profiles'], 'profile_id')
+    bus_prof_x = 655
+    ac_prof_y = get_row_y(tmap['app.access_consents'], 'profile_id')
+    at_prof_y = get_row_y(tmap['app.access_tokens'], 'profile_id')
+    polylines.append([(590, dp_prof_y), (bus_prof_x, dp_prof_y), (bus_prof_x, at_prof_y)])
+    polylines.append([(bus_prof_x, ac_prof_y), (690, ac_prof_y)])
+    polylines.append([(bus_prof_x, at_prof_y), (690, at_prof_y)])
+
+    # 3. agency_id bus:
+    # From ref.agencies.agency_id (270, ag_y)
+    ag_y = get_row_y(tmap['ref.agencies'], 'agency_id')
+    bus_ag_x1 = 300
+    cross_ag_y = 780 # corridor between passports and biometrics
+    bus_ag_x2 = 670
+    ac_ag_y = get_row_y(tmap['app.access_consents'], 'agency_id')
+    at_ag_y = get_row_y(tmap['app.access_tokens'], 'agency_id')
+    bv_ag_y = get_row_y(tmap['audit.biometric_verifications'], 'agency_id')
+    polylines.append([(270, ag_y), (bus_ag_x1, ag_y), (bus_ag_x1, cross_ag_y), (bus_ag_x2, cross_ag_y), (bus_ag_x2, ac_ag_y)])
+    polylines.append([(bus_ag_x2, ac_ag_y), (690, ac_ag_y)])
+    polylines.append([(bus_ag_x2, at_ag_y), (690, at_ag_y)])
+    polylines.append([(bus_ag_x2, bv_ag_y), (690, bv_ag_y)])
+
+    # 4. trust_level_id:
+    # From ref.trust_levels.trust_level_id (270, tl_y)
+    tl_y = get_row_y(tmap['ref.trust_levels'], 'trust_level_id')
+    dp_tl_y = get_row_y(tmap['app.digital_profiles'], 'trust_level_id')
+    at_req_tl_y = get_row_y(tmap['app.access_tokens'], 'required_trust_level_id')
+    bus_tl_x = 315
+    cross_tl_y = 255 # corridor between citizens and digital_profiles
+    bus_tl_x2 = 662
+    # Branch to digital_profiles
+    polylines.append([(270, tl_y), (bus_tl_x, tl_y), (bus_tl_x, dp_tl_y), (350, dp_tl_y)])
+    # Branch to access_tokens
+    polylines.append([(bus_tl_x, cross_tl_y), (bus_tl_x2, cross_tl_y), (bus_tl_x2, at_req_tl_y), (690, at_req_tl_y)])
+
+    # 5. doc_type_id:
+    # From ref.document_types.doc_type_id (270, dt_y) to app.electronic_passports.doc_type_id (350, ep_dt_y)
+    dt_y = get_row_y(tmap['ref.document_types'], 'doc_type_id')
+    ep_dt_y = get_row_y(tmap['app.electronic_passports'], 'doc_type_id')
+    polylines.append([(270, dt_y), (325, dt_y), (325, ep_dt_y), (350, ep_dt_y)])
+
+    # 6. modality_id:
+    # From ref.biometric_modalities.modality_id (270, mod_y)
+    mod_y = get_row_y(tmap['ref.biometric_modalities'], 'modality_id')
+    bt_mod_y = get_row_y(tmap['app.biometric_templates'], 'modality_id')
+    bv_mod_y = get_row_y(tmap['audit.biometric_verifications'], 'modality_id')
+    bus_mod_x = 335
+    cross_mod_y = 795
+    bus_mod_x2 = 678
+    # Branch to biometric_templates
+    polylines.append([(270, mod_y), (bus_mod_x, mod_y), (bus_mod_x, bt_mod_y), (350, bt_mod_y)])
+    # Branch to biometric_verifications
+    polylines.append([(bus_mod_x, cross_mod_y), (bus_mod_x2, cross_mod_y), (bus_mod_x2, bv_mod_y), (690, bv_mod_y)])
+
+    svg_w = 1290
+    svg_h = 1040
 
     svg = []
-    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">')
-    svg.append('<defs>')
-    # Arrow markers
-    svg.append('''
-        <marker id="arrow-ref" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 1 L 10 5 L 0 9 z" fill="#23497d" />
+    svg.append(f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_w} {svg_h}" width="{svg_w}" height="{svg_h}">')
+    svg.append('''<defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <polygon points="0,0 10,5 0,10" fill="#ffffff" stroke="#000000" stroke-width="1.2" />
         </marker>
-        <marker id="arrow-app" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-            <path d="M 0 1 L 10 5 L 0 9 z" fill="#0e6936" />
-        </marker>
-        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
-            <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
-        </filter>
-    ''')
-    svg.append('</defs>')
-
+    </defs>''')
     svg.append('<style>')
     svg.append('''
-        .title { font-family: "Segoe UI", Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #111; }
-        .subtitle { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; fill: #555; }
-        .tbl-title { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; font-weight: bold; fill: #ffffff; }
-        .col-txt { font-family: "Consolas", "Courier New", monospace; font-size: 11px; fill: #222; }
-        .pk { font-weight: bold; fill: #b7472a; }
-        .fk { font-weight: bold; fill: #23497d; }
-        .uq { font-weight: bold; fill: #6a1b9a; }
-        .type { fill: #666; font-size: 10px; }
-        .conn-line { fill: none; stroke-width: 1.8; stroke-dasharray: 5, 3; }
-        .card-lbl { font-family: "Segoe UI", Arial, sans-serif; font-size: 11px; font-weight: bold; fill: #111; }
-        .fk-badge-txt { font-family: "Consolas", monospace; font-size: 9px; fill: #fff; font-weight: bold; }
+        .tbl-border { fill: #ffffff; stroke: #000000; stroke-width: 1.2; }
+        .row-line { stroke: #000000; stroke-width: 0.8; }
+        .tbl-hdr { font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; fill: #000000; text-anchor: middle; }
+        .col-txt { font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; fill: #000000; }
+        .bold-tag { font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; font-weight: bold; fill: #000000; }
+        .conn-ortho { fill: none; stroke: #000000; stroke-width: 1; }
     ''')
     svg.append('</style>')
 
-    # Background
-    svg.append(f'<rect width="{svg_width}" height="{svg_height}" fill="#fafbfc" />')
+    # Pure white background
+    svg.append(f'<rect width="{svg_w}" height="{svg_h}" fill="#ffffff" />')
 
-    # Watermark / Title
-    svg.append('<text x="50" y="32" class="title">ER-диаграмма домена: Защита БД систем цифровой идентификации граждан (Вариант 12)</text>')
-    svg.append('<text x="50" y="48" class="subtitle">Полная реляционная модель: 14 сущностей, 14 внешних ключей (FK), разделение на схемы ref / app / audit / stg</text>')
-
-    # Draw Legend
-    leg_x = 1080
-    leg_y = 18
-    for schema, col in colors.items():
-        svg.append(f'<rect x="{leg_x}" y="{leg_y}" width="18" height="18" rx="3" fill="{col["header"]}" />')
-        svg.append(f'<text x="{leg_x+24}" y="{leg_y+14}" font-family="Segoe UI" font-size="12px" font-weight="bold" fill="#333">Схема {schema}</text>')
-        leg_x += 140
-
-    # Draw Connections (Lines, Arrows, Cardinalities, FK Badges)
-    for link in fk_links:
-        pts = link['pts']
-        color = link['color']
-        marker_id = "arrow-ref" if color == '#23497d' else "arrow-app"
-
-        # Construct polyline / smooth path
-        path_str = f"M {pts[0][0]} {pts[0][1]}"
+    # Draw Connections
+    for pts in polylines:
+        d_str = f"M {pts[0][0]} {pts[0][1]}"
         for pt in pts[1:]:
-            path_str += f" L {pt[0]} {pt[1]}"
-
-        # Background stroke for visibility
-        svg.append(f'<path d="{path_str}" stroke="#ffffff" stroke-width="4" fill="none" />')
-        # Main dashed line
-        svg.append(f'<path d="{path_str}" class="conn-line" stroke="{color}" marker-end="url(#{marker_id})" />')
-
-        # Start dot (PK source)
-        svg.append(f'<circle cx="{pts[0][0]}" cy="{pts[0][1]}" r="3.5" fill="{color}" stroke="#fff" stroke-width="1.2" />')
-
-        # Cardinality text at source
-        c_src_x = pts[0][0] + (10 if pts[1][0] >= pts[0][0] else -15)
-        c_src_y = pts[0][1] - 5
-        svg.append(f'<text x="{c_src_x}" y="{c_src_y}" class="card-lbl" fill="{color}">{link["c_src"]}</text>')
-
-        # Cardinality text at destination
-        dst_pt = pts[-1]
-        c_dst_x = dst_pt[0] + (-18 if pts[-2][0] <= dst_pt[0] else 10)
-        c_dst_y = dst_pt[1] - 5
-        svg.append(f'<text x="{c_dst_x}" y="{c_dst_y}" class="card-lbl" fill="{color}">{link["c_dst"]}</text>')
-
-        # Small FK label pill along middle segment
-        mid_idx = len(pts) // 2
-        p1, p2 = pts[mid_idx-1], pts[mid_idx]
-        mx = (p1[0] + p2[0]) / 2
-        my = (p1[1] + p2[1]) / 2
-        fk_name = link['fk']
-        badge_w = len(fk_name) * 5.8 + 10
-        svg.append(f'<rect x="{mx - badge_w/2}" y="{my - 7}" width="{badge_w}" height="14" rx="3" fill="{color}" opacity="0.9" />')
-        svg.append(f'<text x="{mx}" y="{my + 3.5}" text-anchor="middle" class="fk-badge-txt">{fk_name}</text>')
+            d_str += f" L {pt[0]} {pt[1]}"
+        
+        # Check if last point touches a table border -> add arrow marker
+        last_x = pts[-1][0]
+        # In our layout, target table inputs are at x=350, x=590, x=690
+        has_arrow = last_x in (350, 590, 690)
+        marker_attr = ' marker-end="url(#arrow)"' if has_arrow else ''
+        svg.append(f'<path d="{d_str}" class="conn-ortho"{marker_attr} />')
 
     # Draw Tables
     for t in tables:
-        full_name = f"{t['schema']}.{t['name']}"
-        x = t['x']
-        y = t['y']
-        w = t['w']
+        x, y, w = t['x'], t['y'], t['w']
         col_count = len(t['cols'])
-        row_h = 20
-        header_h = 26
-        h = header_h + col_count * row_h + 8
+        h = header_h + col_count * row_h
+        full_name = f"{t['schema']}.{t['name']}"
 
-        c = colors[t['schema']]
-        # Table container with shadow
-        svg.append(f'<g filter="url(#shadow)">')
-        svg.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="5" fill="{c["bg"]}" stroke="{c["border"]}" stroke-width="1.4" />')
-        # Header
-        svg.append(f'<path d="M {x} {y+5} Q {x} {y} {x+5} {y} L {x+w-5} {y} Q {x+w} {y} {x+w} {y+5} L {x+w} {y+header_h} L {x} {y+header_h} Z" fill="{c["header"]}" />')
-        svg.append(f'<text x="{x+10}" y="{y+18}" class="tbl-title">{full_name}</text>')
-        svg.append('</g>')
+        # Outer border
+        svg.append(f'<rect x="{x}" y="{y}" width="{w}" height="{h}" class="tbl-border" />')
+        
+        # Header text
+        svg.append(f'<text x="{x + w/2}" y="{y + 16}" class="tbl-hdr">{full_name}</text>')
+        # Header bottom line
+        svg.append(f'<line x1="{x}" y1="{y + header_h}" x2="{x + w}" y2="{y + header_h}" class="row-line" />')
 
         # Columns
-        col_y = y + header_h + 16
-        for key_type, col_name, data_type in t['cols']:
-            key_cls = "pk" if key_type == "PK" else ("fk" if key_type == "FK" else ("uq" if key_type == "UQ" else "col-txt"))
-            svg.append(f'<text x="{x+10}" y="{col_y}" class="col-txt {key_cls}">{key_type}</text>')
-            svg.append(f'<text x="{x+36}" y="{col_y}" class="col-txt">{col_name}</text>')
-            svg.append(f'<text x="{x+w-10}" y="{col_y}" class="col-txt type" text-anchor="end">{data_type}</text>')
-            col_y += row_h
+        for r_idx, c in enumerate(t['cols']):
+            curr_y = y + header_h + r_idx * row_h
+            if r_idx > 0:
+                svg.append(f'<line x1="{x}" y1="{curr_y}" x2="{x + w}" y2="{curr_y}" class="row-line" />')
+            
+            # Text inside row
+            text_y = curr_y + 14
+            if c in t['pks']:
+                svg.append(f'<text x="{x + 8}" y="{text_y}" class="bold-tag">(PK) <tspan font-weight="normal">{c}</tspan></text>')
+            elif c in t['fks']:
+                svg.append(f'<text x="{x + 8}" y="{text_y}" class="bold-tag">(FK) <tspan font-weight="normal">{c}</tspan></text>')
+            else:
+                svg.append(f'<text x="{x + 8}" y="{text_y}" class="col-txt">{c}</text>')
 
     svg.append('</svg>')
 
     os.makedirs('images', exist_ok=True)
-    svg_path = os.path.join('images', 'er_diagram.svg')
+    svg_path = 'images/er_diagram.svg'
     with open(svg_path, 'w', encoding='utf-8') as f:
         f.write('\n'.join(svg))
-    print(f'Generated {svg_path} successfully.')
+    print("Saved images/er_diagram.svg")
 
-    # Convert to PNG using typst
-    typst_wrapper = os.path.join('images', 'temp_er.typ')
-    with open(typst_wrapper, 'w', encoding='utf-8') as f:
-        f.write('#set page(width: auto, height: auto, margin: 5pt)\n#image("er_diagram.svg")\n')
-
-    png_path = os.path.join('images', 'er_diagram.png')
-    res = subprocess.run(['.\\typst.exe', 'compile', '--format', 'png', '--ppi', '160', typst_wrapper, png_path], capture_output=True, text=True)
-    if os.path.exists(typst_wrapper):
-        os.remove(typst_wrapper)
-
+    # Render PNG
+    typ_code = '#set page(width: auto, height: auto, margin: 15pt)\n#image("er_diagram.svg")\n'
+    with open('images/temp_er.typ', 'w', encoding='utf-8') as f:
+        f.write(typ_code)
+    
+    png_path = 'images/er_diagram.png'
+    res = subprocess.run(['.\\typst.exe', 'compile', '--format', 'png', '--ppi', '180', 'images/temp_er.typ', png_path], capture_output=True, text=True)
+    if os.path.exists('images/temp_er.typ'):
+        os.remove('images/temp_er.typ')
+    
     if res.returncode == 0:
-        print(f'Rendered {png_path} successfully (size: {os.path.getsize(png_path)} bytes).')
+        print(f"Rendered {png_path} successfully (size: {os.path.getsize(png_path)} bytes)")
     else:
-        print(f'Typst error: {res.stderr}')
+        print("Typst error:", res.stderr)
 
 if __name__ == '__main__':
-    generate_svg()
+    generate_perfect_bw_er()
