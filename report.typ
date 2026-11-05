@@ -462,8 +462,8 @@
   [code], [Код модальности], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, UNIQUE, CHECK (FACE_2D, FACE_3D, FINGERPRINT_SLAP, FINGERPRINT_ROLL, IRIS, VOICE)],
   [name], [Наименование параметра], [VARCHAR(100)], [Простой однозначный], [Кириллица], [-], [NOT NULL],
   [iso_standard], [Стандарт ISO/ГОСТ], [VARCHAR(100)], [Простой однозначный], [Латиница + цифры], [-], [NOT NULL],
-  [far_limit], [Предел FAR], [NUMERIC(8,6)], [Простой однозначный], [Дробные числа], [-], [NOT NULL, CHECK (far_limit > 0 AND far_limit < 1)],
-  [frr_limit], [Предел FRR], [NUMERIC(8,6)], [Простой однозначный], [Дробные числа], [-], [NOT NULL, CHECK (frr_limit > 0 AND frr_limit < 1)],
+  [far_limit], [Предел FAR], [NUMERIC(8,6)], [Простой однозначный], [Дробные положительные числа (0..1)], [-], [NOT NULL, CHECK (far_limit > 0 AND far_limit < 1)],
+  [frr_limit], [Предел FRR], [NUMERIC(8,6)], [Простой однозначный], [Дробные положительные числа (0..1)], [-], [NOT NULL, CHECK (frr_limit > 0 AND frr_limit < 1)],
 )
 
 #ddl-table([ref.agencies (ведомства и организации-потребители)],
@@ -518,7 +518,7 @@
   [modality_id], [Модальность биометрии], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.biometric_modalities(modality_id)],
   [template_hash], [SHA-256 хеш вектора], [CHAR(64)], [Простой однозначный], [HEX-строка (64)], [-], [NOT NULL, UNIQUE, CHECK (template_hash ~ '^\\[A-Fa-f0-9\\]{64}\$'), UNIQUE(citizen_id, modality_id)],
   [encrypted_template], [Зашифрованный биовектор], [BYTEA], [Составной однозначный], [Двоичные данные], [-], [NOT NULL, шифрование pgcrypto],
-  [quality_score], [Оценка качества], [NUMERIC(5,2)], [Простой однозначный], [Дробные числа (0-100)], [-], [NOT NULL, CHECK (quality_score BETWEEN 0.00 AND 100.00)],
+  [quality_score], [Оценка качества], [NUMERIC(5,2)], [Простой однозначный], [Дробные положительные числа (0..100)], [-], [NOT NULL, CHECK (quality_score BETWEEN 0.00 AND 100.00)],
   [capture_device_id], [ID сканера/камеры], [VARCHAR(100)], [Простой однозначный], [Латиница + цифры], [-], [NOT NULL],
   [status], [Статус валидности], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, DEFAULT 'VERIFIED', CHECK (PENDING, VERIFIED, DEPRECATED, REVOKED)],
 )
@@ -573,7 +573,7 @@
   [citizen_id], [Проверяемый гражданин], [BIGINT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на app.citizens(citizen_id)],
   [modality_id], [Модальность биометрии], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.biometric_modalities(modality_id)],
   [agency_id], [Инициатор верификации], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.agencies(agency_id)],
-  [similarity_score], [Балл сходства], [NUMERIC(5,4)], [Простой однозначный], [Дробные числа (0-1)], [-], [NOT NULL, CHECK (similarity_score BETWEEN 0.0 AND 1.0)],
+  [similarity_score], [Балл сходства], [NUMERIC(5,4)], [Простой однозначный], [Дробные положительные числа (0..1)], [-], [NOT NULL, CHECK (similarity_score BETWEEN 0.0 AND 1.0)],
   [decision], [Вердикт системы], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, CHECK (decision IN ('MATCH', 'NO_MATCH', 'SUSPICIOUS_LIVENESS'))],
   [client_ip], [Сетевой адрес инициатора], [INET], [Прост./Сост. однозначный], [IP-адрес], [-], [Допускается NULL],
 )

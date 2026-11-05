@@ -266,6 +266,10 @@ def main():
                             cell.text = 'Натур. полож. числа'
                         elif attr_name == 'client_port':
                             cell.text = 'Целые положительные числа (1..65535)'
+                        elif attr_name in ['far_limit', 'frr_limit', 'similarity_score']:
+                            cell.text = 'Дробные положительные числа (0..1)'
+                        elif attr_name == 'quality_score':
+                            cell.text = 'Дробные положительные числа (0..100)'
                         elif attr_name == 'row_id':
                             cell.text = 'Натур. полож. числа / UUID'
 
