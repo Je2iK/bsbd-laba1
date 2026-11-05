@@ -273,6 +273,52 @@ def main():
                             for r in p.runs:
                                 set_run_font(r, 'Times New Roman', 9.0)
 
+    # 6. Ensure empty line (пустая строка) after EVERY figure caption and after EVERY table!
+    body = doc._body._element
+
+    def create_empty_paragraph():
+        return parse_xml(r'''
+            <w:p xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+                <w:pPr>
+                    <w:spacing w:before="0" w:after="0" w:line="360" w:lineRule="auto"/>
+                    <w:rPr>
+                        <w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman"/>
+                        <w:sz w:val="28"/>
+                        <w:szCs w:val="28"/>
+                    </w:rPr>
+                </w:pPr>
+            </w:p>
+        ''')
+
+    # Add empty line after figure captions
+    for child in list(body):
+        if child.tag.endswith('p'):
+            p = docx.text.paragraph.Paragraph(child, doc)
+            txt = p.text.strip()
+            if txt.startswith('Рисунок '):
+                child_idx = list(body).index(child)
+                next_elem = body[child_idx + 1] if child_idx + 1 < len(body) else None
+                is_empty_p = False
+                if next_elem is not None and next_elem.tag.endswith('p'):
+                    next_p = docx.text.paragraph.Paragraph(next_elem, doc)
+                    if next_p.text.strip() == '':
+                        is_empty_p = True
+                if not is_empty_p:
+                    child.addnext(create_empty_paragraph())
+
+    # Add empty line after tables
+    for child in list(body):
+        if child.tag.endswith('tbl'):
+            child_idx = list(body).index(child)
+            next_elem = body[child_idx + 1] if child_idx + 1 < len(body) else None
+            is_empty_p = False
+            if next_elem is not None and next_elem.tag.endswith('p'):
+                next_p = docx.text.paragraph.Paragraph(next_elem, doc)
+                if next_p.text.strip() == '':
+                    is_empty_p = True
+            if not is_empty_p:
+                child.addnext(create_empty_paragraph())
+
     # Save to all 3 standard docx files!
     doc.save('БСБД_Корецкий_ПС_ЛР1.docx')
     doc.save('БСБД_КорецкийП.С._ЛР1.docx')

@@ -44,6 +44,9 @@
 #show figure.where(kind: image): set figure(supplement: [Рисунок])
 #show figure.where(kind: table): set figure(supplement: [Таблица])
 
+#show figure.where(kind: image): it => block(above: 1.2em, below: 2.4em)[#it]
+#show figure.where(kind: table): it => block(above: 1.2em, below: 2.4em)[#it]
+
 #show figure.caption: c => {
   if c.kind == table {
     // Подпись таблицы: сверху, по левому краю, без абзацного отступа
