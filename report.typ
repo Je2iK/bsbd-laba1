@@ -83,7 +83,6 @@
         else if col == 2 or col == 5 { center + horizon }
         else { left + horizon }
       },
-      fill: (x, y) => if y == 0 { rgb("f0f0f0") },
       [#strong[Атрибут]], [#strong[Название]], [#strong[Тип]], [#strong[Вид]], [#strong[Домен]], [#strong[Ключ]], [#strong[Ограничения]],
       ..body
     ),
@@ -103,7 +102,6 @@
         else if col == 1 { center + horizon }
         else { left + horizon }
       },
-      fill: (x, y) => if y == 0 { rgb("f0f0f0") },
       [#strong[Поле]], [#strong[Класс данных]],
       ..body
     ),
@@ -443,24 +441,24 @@
 
 #ddl-table([ref.trust_levels (уровни доверия цифрового профиля)],
   [trust_level_id], [Идентификатор уровня], [INT], [Простой однозначный], [Натур. полож. числа], [PK], [NOT NULL],
-  [code], [Кодовое имя уровня], [VARCHAR(30)], [Простой однозначный], [Латиница], [UQ], [NOT NULL, CHECK (ANONYMOUS, SIMPLIFIED, STANDARD, CONFIRMED, BIOMETRIC)],
+  [code], [Кодовое имя уровня], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, UNIQUE, CHECK (ANONYMOUS, SIMPLIFIED, STANDARD, CONFIRMED, BIOMETRIC)],
   [name], [Наименование уровня], [VARCHAR(100)], [Простой однозначный], [Кириллица], [-], [NOT NULL],
-  [auth_factor_min], [Мин. факторов], [INT], [Простой однозначный], [Целые числа], [-], [NOT NULL, CHECK (1..4)],
+  [auth_factor_min], [Мин. факторов], [INT], [Простой однозначный], [Целые положительные числа (1..4)], [-], [NOT NULL, CHECK (auth_factor_min BETWEEN 1 AND 4)],
   [description], [Описание доступа], [TEXT], [Составной многозначный], [Кириллица], [-], [NOT NULL],
   [is_active], [Флаг активности], [BOOLEAN], [Простой однозначный], [Логический], [-], [NOT NULL, DEFAULT TRUE],
 )
 
 #ddl-table([ref.document_types (типы удостоверяющих документов)],
   [doc_type_id], [Идентификатор типа], [INT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
-  [type_code], [Системный код типа], [VARCHAR(30)], [Простой однозначный], [Латиница], [UQ], [NOT NULL, CHECK (E_PASSPORT, DIGITAL_ID_CARD, FOREIGN_PASSPORT, RESIDENCE_PERMIT)],
+  [type_code], [Системный код типа], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, UNIQUE, CHECK (E_PASSPORT, DIGITAL_ID_CARD, FOREIGN_PASSPORT, RESIDENCE_PERMIT)],
   [type_name], [Название документа], [VARCHAR(150)], [Простой однозначный], [Кириллица], [-], [NOT NULL],
   [has_rfid_chip], [Наличие RFID-чипа], [BOOLEAN], [Простой однозначный], [Логический], [-], [NOT NULL, DEFAULT TRUE],
-  [validity_years], [Срок действия (лет)], [INT], [Простой однозначный], [Натур. числа], [-], [NOT NULL, CHECK (validity_years > 0)],
+  [validity_years], [Срок действия (лет)], [INT], [Простой однозначный], [Целые положительные числа (>0)], [-], [NOT NULL, CHECK (validity_years > 0)],
 )
 
 #ddl-table([ref.biometric_modalities (биометрические модальности)],
   [modality_id], [Идентификатор модальности], [INT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
-  [code], [Код модальности], [VARCHAR(30)], [Простой однозначный], [Латиница], [UQ], [NOT NULL, CHECK (FACE_2D, FACE_3D, FINGERPRINT_SLAP, FINGERPRINT_ROLL, IRIS, VOICE)],
+  [code], [Код модальности], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, UNIQUE, CHECK (FACE_2D, FACE_3D, FINGERPRINT_SLAP, FINGERPRINT_ROLL, IRIS, VOICE)],
   [name], [Наименование параметра], [VARCHAR(100)], [Простой однозначный], [Кириллица], [-], [NOT NULL],
   [iso_standard], [Стандарт ISO/ГОСТ], [VARCHAR(100)], [Простой однозначный], [Латиница + цифры], [-], [NOT NULL],
   [far_limit], [Предел FAR], [NUMERIC(8,6)], [Простой однозначный], [Дробные числа], [-], [NOT NULL, CHECK (far_limit > 0 AND far_limit < 1)],
@@ -469,11 +467,11 @@
 
 #ddl-table([ref.agencies (ведомства и организации-потребители)],
   [agency_id], [Идентификатор ведомства], [INT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
-  [agency_code], [Системный код], [VARCHAR(50)], [Простой однозначный], [Латиница], [UQ], [NOT NULL],
+  [agency_code], [Системный код], [VARCHAR(50)], [Простой однозначный], [Латиница], [-], [NOT NULL, UNIQUE],
   [agency_name], [Официальное имя], [VARCHAR(255)], [Составной однозначный], [Кириллица], [-], [NOT NULL],
-  [inn], [ИНН организации], [VARCHAR(12)], [Простой однозначный], [Цифры (10-12)], [UQ], [NOT NULL, CHECK (length(inn) IN (10, 12))],
-  [ogrn], [ОГРН организации], [VARCHAR(15)], [Простой однозначный], [Цифры (13-15)], [UQ], [NOT NULL, CHECK (length(ogrn) IN (13, 15))],
-  [trust_tier], [Уровень доверия], [INT], [Простой однозначный], [Целые числа], [-], [NOT NULL, CHECK (trust_tier BETWEEN 1 AND 5)],
+  [inn], [ИНН организации], [VARCHAR(12)], [Простой однозначный], [Цифры (10-12)], [-], [NOT NULL, UNIQUE, CHECK (length(inn) IN (10, 12))],
+  [ogrn], [ОГРН организации], [VARCHAR(15)], [Простой однозначный], [Цифры (13-15)], [-], [NOT NULL, UNIQUE, CHECK (length(ogrn) IN (13, 15))],
+  [trust_tier], [Уровень доверия], [INT], [Простой однозначный], [Целые положительные числа (1..5)], [-], [NOT NULL, CHECK (trust_tier BETWEEN 1 AND 5)],
   [is_active], [Флаг активности], [BOOLEAN], [Простой однозначный], [Логический], [-], [NOT NULL, DEFAULT TRUE],
 )
 
@@ -484,16 +482,16 @@
   [middle_name], [Отчество гражданина], [VARCHAR(100)], [Простой однозначный], [Кириллица], [-], [Допускается NULL],
   [birth_date], [Дата рождения], [DATE], [Составной однозначный], [Дата], [-], [NOT NULL, CHECK (birth_date > '1900-01-01' AND <= CURRENT_DATE)],
   [birth_place], [Место рождения], [VARCHAR(255)], [Составной однозначный], [Кириллица], [-], [NOT NULL],
-  [gender], [Пол гражданина], [CHAR(1)], [Простой однозначный], [Символ], [-], [NOT NULL, CHECK (gender IN ('M', 'F'))],
+  [gender], [Пол гражданина], [CHAR(1)], [Простой однозначный], [Латиница ('M', 'F')], [-], [NOT NULL, CHECK (gender IN ('M', 'F'))],
   [created_at], [Время регистрации], [TIMESTAMPTZ], [Составной однозначный], [Дата и время], [-], [NOT NULL, DEFAULT CURRENT_TIMESTAMP],
 )
 
 #ddl-table([app.digital_profiles (единый цифровой профиль)],
   [profile_id], [Идентификатор профиля], [BIGINT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
-  [citizen_id], [Владелец профиля], [BIGINT], [Простой однозначный], [Натур. полож. числа], [FK, UQ], [NOT NULL, FK на app.citizens(citizen_id) ON DELETE RESTRICT],
-  [snils], [СНИЛС гражданина], [CHAR(11)], [Простой однозначный], [Цифры (11)], [UQ], [NOT NULL, CHECK (snils ~ '^\\[0-9\\]{11}\$')],
-  [inn], [ИНН физлица], [VARCHAR(12)], [Простой однозначный], [Цифры (12)], [UQ], [NOT NULL, CHECK (length(inn) = 12)],
-  [trust_level_id], [Уровень доверия], [INT], [Простой однозначный], [Целые числа], [FK], [NOT NULL, FK на ref.trust_levels(trust_level_id)],
+  [citizen_id], [Владелец профиля], [BIGINT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, UNIQUE, FK на app.citizens(citizen_id) ON DELETE RESTRICT],
+  [snils], [СНИЛС гражданина], [CHAR(11)], [Простой однозначный], [Цифры (11)], [-], [NOT NULL, UNIQUE, CHECK (snils ~ '^\\[0-9\\]{11}\$')],
+  [inn], [ИНН физлица], [VARCHAR(12)], [Простой однозначный], [Цифры (12)], [-], [NOT NULL, UNIQUE, CHECK (length(inn) = 12)],
+  [trust_level_id], [Уровень доверия], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.trust_levels(trust_level_id)],
   [profile_status], [Статус профиля], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, DEFAULT 'ACTIVE', CHECK (PENDING, ACTIVE, SUSPENDED, BLOCKED, REVOKED)],
   [verified_at], [Дата подтверждения], [TIMESTAMPTZ], [Составной однозначный], [Дата и время], [-], [Допускается NULL],
   [created_at], [Время создания], [TIMESTAMPTZ], [Составной однозначный], [Дата и время], [-], [NOT NULL, DEFAULT CURRENT_TIMESTAMP],
@@ -503,7 +501,7 @@
   [passport_id], [Идентификатор паспорта], [BIGINT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
   [citizen_id], [Владелец паспорта], [BIGINT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на app.citizens(citizen_id)],
   [doc_type_id], [Тип документа], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.document_types(doc_type_id)],
-  [chip_uid], [Аппаратный UID чипа], [VARCHAR(64)], [Простой однозначный], [HEX-строка], [UQ], [NOT NULL, CHECK (chip_uid ~ '^\\[A-Fa-f0-9\\]+\$')],
+  [chip_uid], [Аппаратный UID чипа], [VARCHAR(64)], [Простой однозначный], [HEX-строка], [-], [NOT NULL, UNIQUE, CHECK (chip_uid ~ '^\\[A-Fa-f0-9\\]+\$')],
   [series], [Серия бланка], [CHAR(4)], [Простой однозначный], [Цифры (4)], [-], [NOT NULL, CHECK (series ~ '^\\[0-9\\]{4}\$')],
   [number], [Номер бланка], [CHAR(6)], [Простой однозначный], [Цифры (6)], [-], [NOT NULL, CHECK (number ~ '^\\[0-9\\]{6}\$'), UNIQUE(series, number)],
   [issue_date], [Дата выдачи], [DATE], [Составной однозначный], [Дата], [-], [NOT NULL, CHECK (issue_date <= CURRENT_DATE)],
@@ -517,7 +515,7 @@
   [biometric_id], [Идентификатор биометрии], [BIGINT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
   [citizen_id], [Гражданин-субъект], [BIGINT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на app.citizens(citizen_id)],
   [modality_id], [Модальность биометрии], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.biometric_modalities(modality_id)],
-  [template_hash], [SHA-256 хеш вектора], [CHAR(64)], [Простой однозначный], [HEX-строка (64)], [UQ], [NOT NULL, CHECK (template_hash ~ '^\\[A-Fa-f0-9\\]{64}\$'), UNIQUE(citizen_id, modality_id)],
+  [template_hash], [SHA-256 хеш вектора], [CHAR(64)], [Простой однозначный], [HEX-строка (64)], [-], [NOT NULL, UNIQUE, CHECK (template_hash ~ '^\\[A-Fa-f0-9\\]{64}\$'), UNIQUE(citizen_id, modality_id)],
   [encrypted_template], [Зашифрованный биовектор], [BYTEA], [Составной однозначный], [Двоичные данные], [-], [NOT NULL, шифрование pgcrypto],
   [quality_score], [Оценка качества], [NUMERIC(5,2)], [Простой однозначный], [Дробные числа (0-100)], [-], [NOT NULL, CHECK (quality_score BETWEEN 0.00 AND 100.00)],
   [capture_device_id], [ID сканера/камеры], [VARCHAR(100)], [Простой однозначный], [Латиница + цифры], [-], [NOT NULL],
@@ -539,8 +537,8 @@
   [token_id], [Идентификатор токена], [BIGINT], [Простой однозначный], [Натур. полож. числа], [PK], [GENERATED ALWAYS AS IDENTITY, NOT NULL],
   [profile_id], [Целевой профиль], [BIGINT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на app.digital_profiles(profile_id)],
   [agency_id], [Запросившее ведомство], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.agencies(agency_id)],
-  [required_trust_level_id], [Требуемый уровень], [INT], [Простой однозначный], [Целые числа], [FK], [NOT NULL, FK на ref.trust_levels(trust_level_id)],
-  [token_hash], [Хеш токена], [CHAR(64)], [Простой однозначный], [HEX-строка (64)], [UQ], [NOT NULL],
+  [required_trust_level_id], [Требуемый уровень], [INT], [Простой однозначный], [Натур. полож. числа], [FK], [NOT NULL, FK на ref.trust_levels(trust_level_id)],
+  [token_hash], [Хеш токена], [CHAR(64)], [Простой однозначный], [HEX-строка (64)], [-], [NOT NULL, UNIQUE],
   [issued_at], [Время генерации токена], [TIMESTAMPTZ], [Составной однозначный], [Дата и время], [-], [NOT NULL, DEFAULT CURRENT_TIMESTAMP],
   [expires_at], [Время истечения], [TIMESTAMPTZ], [Составной однозначный], [Дата и время], [-], [NOT NULL, CHECK (expires_at > issued_at)],
   [status], [Статус токена], [VARCHAR(20)], [Простой однозначный], [Латиница], [-], [NOT NULL, DEFAULT 'ACTIVE', CHECK (ACTIVE, EXPIRED, REVOKED)],
@@ -551,7 +549,7 @@
   [login_time], [Время подключения], [TIMESTAMPTZ], [Составной однозначный], [Дата и время], [-], [NOT NULL, DEFAULT CURRENT_TIMESTAMP],
   [username], [Имя роли/пользователя], [TEXT], [Простой однозначный], [Латиница], [-], [NOT NULL],
   [client_ip], [IP-адрес клиента], [INET], [Прост./Сост. однозначный], [IP-адрес], [-], [Допускается NULL],
-  [client_port], [Сетевой порт], [INT], [Простой однозначный], [Целые числа], [-], [Допускается NULL],
+  [client_port], [Сетевой порт], [INT], [Простой однозначный], [Целые положительные числа (1..65535)], [-], [Допускается NULL, CHECK (client_port > 0 AND client_port <= 65535)],
   [auth_method], [Метод проверки], [VARCHAR(50)], [Простой однозначный], [Латиница], [-], [NOT NULL, DEFAULT 'PASSWORD'],
   [session_status], [Статус подключения], [VARCHAR(30)], [Простой однозначный], [Латиница], [-], [NOT NULL, DEFAULT 'SUCCESS', CHECK (SUCCESS, DENIED, TERMINATED)],
 )
@@ -563,7 +561,7 @@
   [table_schema], [Схема таблицы], [TEXT], [Простой однозначный], [Латиница], [-], [NOT NULL],
   [table_name], [Имя таблицы], [TEXT], [Простой однозначный], [Латиница], [-], [NOT NULL],
   [operation], [Тип операции], [VARCHAR(10)], [Простой однозначный], [Латиница], [-], [NOT NULL, CHECK (operation IN ('INSERT', 'UPDATE', 'DELETE'))],
-  [row_id], [ID затронутой строки], [TEXT], [Простой однозначный], [Натур. числа / UUID], [-], [Допускается NULL],
+  [row_id], [ID затронутой строки], [TEXT], [Простой однозначный], [Натур. полож. числа / UUID], [-], [Допускается NULL],
   [old_data], [Данные до модификации], [JSONB], [Составной многозначный], [JSON-объект], [-], [Допускается NULL],
   [new_data], [Данные после модификации], [JSONB], [Составной многозначный], [JSON-объект], [-], [Допускается NULL],
 )
@@ -591,6 +589,126 @@
 
 Спроектированные структуры таблиц, ограничения целостности и индексы обеспечивают высокую надежность хранения данных цифровой идентификации, исключают возникновение логических коллизий и гарантируют выполнение требований нормативной документации по защите информации.
 
+=== Наполнение таблиц тестовыми данными
+
+В соответствии с требованиями лабораторной работы для всех таблиц домена базы данных было сгенерировано и загружено тестовое наполнение (не менее 10 строк в основных таблицах). Данные охватывают полный жизненный цикл цифровой идентификации: физических лиц, их подтвержденные цифровые профили, выданные электронные паспорта, биометрические векторы, юридические согласия и сессионные маркеры доступа.
+
+Фрагменты наполнения основных спроектированных таблиц приведены ниже (Таблица 30 – 35).
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1.2cm, 2.8cm, 3.0cm, 2.0cm, 3.5cm, 3.5cm),
+      stroke: 0.5pt,
+      inset: (x: 3pt, y: 4pt),
+      align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
+      [#strong[ID]], [#strong[Код]], [#strong[Наименование]], [#strong[Мин. фак.]], [#strong[Описание]], [#strong[Активность]],
+      [1], [ANONYMOUS], [Анонимный доступ], [1], [Базовые открытые сервисы], [true],
+      [2], [SIMPLIFIED], [Упрощенный профиль], [1], [Заполнение анкет без ПДн], [true],
+      [3], [STANDARD], [Стандартный профиль], [2], [Доступ к базовым госуслугам], [true],
+      [4], [CONFIRMED], [Подтвержденный профиль], [2], [Юридически значимые операции], [true],
+      [5], [BIOMETRIC], [Биометрический профиль], [3], [Высокорисковые фин. сделки], [true],
+    )
+  },
+  caption: [Наполнение таблицы ref.trust_levels],
+)
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1.2cm, 2.8cm, 3.0cm, 3.0cm, 2.5cm, 3.5cm),
+      stroke: 0.5pt,
+      inset: (x: 3pt, y: 4pt),
+      align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
+      [#strong[ID]], [#strong[Код ведомства]], [#strong[ИНН]], [#strong[ОГРН]], [#strong[Уровень]], [#strong[Наименование]],
+      [1], [MVD_MIGRATION], [7701123456], [1027700123456], [5], [ГУВМ МВД России],
+      [2], [MINTSYFRA], [7710474375], [1047702026701], [5], [Минцифры России],
+      [3], [FNS_RUSSIA], [7707329152], [1047707030505], [4], [ФНС России],
+      [4], [SBERBANK_PJSC], [7707083893], [1027700132195], [4], [ПАО Сбербанк],
+      [5], [VTB_BANK_PJSC], [7702070139], [1027739609391], [4], [Банк ВТБ (ПАО)],
+    )
+  },
+  caption: [Примеры наполнения таблицы ref.agencies (из 13 записей)],
+)
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1.0cm, 2.5cm, 2.8cm, 2.8cm, 2.2cm, 1.2cm, 3.5cm),
+      stroke: 0.5pt,
+      inset: (x: 3pt, y: 4pt),
+      align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
+      [#strong[ID]], [#strong[Фамилия]], [#strong[Имя]], [#strong[Отчество]], [#strong[Дата рожд.]], [#strong[Пол]], [#strong[Место рождения]],
+      [1], [Иванов], [Александр], [Сергеевич], [1985-04-12], [M], [гор. Москва],
+      [2], [Смирнова], [Елена], [Владимировна], [1990-08-25], [F], [гор. Новосибирск],
+      [3], [Кузнецов], [Дмитрий], [Алексеевич], [1978-11-03], [M], [гор. Санкт-Петербург],
+      [4], [Попова], [Анна], [Игоревна], [1995-02-17], [F], [гор. Екатеринбург],
+      [5], [Васильев], [Максим], [Олегович], [2001-06-30], [M], [гор. Казань],
+    )
+  },
+  caption: [Примеры наполнения таблицы app.citizens (из 12 записей)],
+)
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1.0cm, 1.2cm, 2.8cm, 2.8cm, 1.8cm, 2.4cm, 4.0cm),
+      stroke: 0.5pt,
+      inset: (x: 3pt, y: 4pt),
+      align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
+      [#strong[ID]], [#strong[Гражд.]], [#strong[СНИЛС]], [#strong[ИНН]], [#strong[Уровень]], [#strong[Статус]], [#strong[Дата подтверждения]],
+      [1], [1], [11223344556], [770112345678], [5], [ACTIVE], [2023-01-15 10:00:00],
+      [2], [2], [22334455667], [540198765432], [5], [ACTIVE], [2023-02-20 11:30:00],
+      [3], [3], [33445566778], [780145612378], [4], [ACTIVE], [2023-03-10 14:15:00],
+      [4], [4], [44556677889], [660167891234], [4], [ACTIVE], [2023-04-05 09:45:00],
+      [5], [5], [55667788990], [160123456789], [3], [ACTIVE], [2023-05-12 16:20:00],
+    )
+  },
+  caption: [Примеры наполнения таблицы app.digital_profiles (из 12 записей)],
+)
+
+#figure(
+  {
+    set text(size: 8.0pt)
+    table(
+      columns: (0.9cm, 1.1cm, 3.2cm, 1.4cm, 1.6cm, 2.1cm, 2.1cm, 1.8cm, 1.8cm),
+      stroke: 0.5pt,
+      inset: (x: 2.5pt, y: 3.5pt),
+      align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
+      [#strong[ID]], [#strong[Гражд.]], [#strong[UID чипа]], [#strong[Серия]], [#strong[Номер]], [#strong[Выдан]], [#strong[Истекает]], [#strong[Код]], [#strong[Статус]],
+      [1], [1], [E0040100112233AA], [4515], [102030], [2020-05-10], [2030-05-10], [770-001], [true],
+      [2], [2], [E0040100112233BB], [5016], [203040], [2021-06-15], [2031-06-15], [540-002], [true],
+      [3], [3], [E0040100112233CC], [4017], [304050], [2019-09-20], [2029-09-20], [780-003], [true],
+      [4], [4], [E0040100112233DD], [6518], [405060], [2022-01-12], [2027-01-12], [660-004], [true],
+      [5], [5], [E0040100112233EE], [9219], [506070], [2021-08-22], [2031-08-22], [160-005], [true],
+    )
+  },
+  caption: [Примеры наполнения таблицы app.electronic_passports (из 24 записей)],
+)
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1.0cm, 3.8cm, 2.8cm, 2.8cm, 1.8cm, 3.8cm),
+      stroke: 0.5pt,
+      inset: (x: 3pt, y: 4pt),
+      align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
+      [#strong[ID]], [#strong[Время входа]], [#strong[Пользователь]], [#strong[IP-клиента]], [#strong[Порт]], [#strong[Статус сессии]],
+      [1], [2026-10-24 08:00:15], [security_admin], [192.168.10.15], [54320], [SUCCESS],
+      [2], [2026-10-24 08:05:22], [ddl_admin], [192.168.10.20], [54322], [SUCCESS],
+      [3], [2026-10-24 08:15:40], [app_owner], [127.0.0.1], [54324], [SUCCESS],
+      [4], [2026-10-24 08:30:10], [dml_admin], [192.168.10.25], [54326], [SUCCESS],
+      [5], [2026-10-24 09:00:05], [app_writer], [10.0.5.12], [54328], [SUCCESS],
+    )
+  },
+  caption: [Примеры журнала подключений audit.login_log (из 10 записей)],
+)
+
 
 // ============================================================================
 // РАЗДЕЛ 3. РОЛИ И ПРИВИЛЕГИИ
@@ -612,7 +730,6 @@
       stroke: 0.5pt,
       inset: (x: 4pt, y: 5pt),
       align: (col, row) => if row == 0 { center + horizon } else { left + horizon },
-      fill: (x, y) => if y == 0 { rgb("f0f0f0") },
       [#strong[Уровень доступа]], [#strong[Роль]], [#strong[Назначение]], [#strong[Права на схемы]], [#strong[Права на данные]], [#strong[Примеры операций]],
       [Базовый доступ], [app_reader], [Просмотр разрешенных открытых данных системы], [USAGE на app, ref], [SELECT на таблицы ref, а также разрешенные таблицы app; без доступа к биометрии и чипам паспортов], [Просмотр граждан, ведомств, классификаторов, профилей],
       [Прикладной доступ], [app_writer], [Добавление и изменение рабочих данных профилей], [Наследует app_reader к app, ref], [Наследует SELECT; дополнительно INSERT, UPDATE на основные таблицы app; DELETE не предоставлен], [Регистрация гражданина, выдача согласий, обновление профиля],
@@ -632,6 +749,8 @@
   image("images/fig02_reader_select.png", width: 90%),
   caption: [Проверка доступа роли app_reader к чтению справочника ведомств],
 )
+
+#pagebreak()
 
 Проведено тестирование, что роль app_reader не может изменять данные (Рисунок 3).
 

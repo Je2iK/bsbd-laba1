@@ -1,7 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1080" width="1400" height="1080">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1450 1080" width="1450" height="1080">
 <defs>
         <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
             <path d="M 0 1.5 L 10 5 L 0 8.5 Z" fill="#000000" />
+        </marker>
+        <marker id="arrow-left" viewBox="0 0 10 10" refX="0" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+            <path d="M 10 1.5 L 0 5 L 10 8.5 Z" fill="#000000" />
         </marker>
     </defs>
 <style>
@@ -13,56 +16,56 @@
         .bold-tag   { font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; font-weight: bold; fill: #000000; }
         .conn-line  { fill: none; stroke: #000000; stroke-width: 1.1; }
         .card-lbl   { font-family: Arial, Helvetica, sans-serif; font-size: 10.5px; font-weight: bold; fill: #000000;
-                      paint-order: stroke; stroke: #ffffff; stroke-width: 3.5px; stroke-linecap: round; stroke-linejoin: round; }
+                      text-anchor: middle; paint-order: stroke; stroke: #ffffff; stroke-width: 4px; stroke-linecap: round; stroke-linejoin: round; }
     
 </style>
-<rect width="1400" height="1080" fill="#ffffff" />
+<rect width="1450" height="1080" fill="#ffffff" />
 <circle cx="280" cy="94.0" r="3" fill="#000000" />
-<line x1="280" y1="94.0" x2="295" y2="94.0" class="conn-line" />
-<text x="286" y="89.0" class="card-lbl">1</text>
+<line x1="280" y1="94.0" x2="305" y2="94.0" class="conn-line" />
+<text x="293" y="88.0" class="card-lbl">1</text>
 <circle cx="280" cy="294.0" r="3" fill="#000000" />
-<line x1="280" y1="294.0" x2="295" y2="294.0" class="conn-line" />
-<text x="286" y="289.0" class="card-lbl">1</text>
+<line x1="280" y1="294.0" x2="305" y2="294.0" class="conn-line" />
+<text x="293" y="288.0" class="card-lbl">1</text>
 <circle cx="280" cy="484.0" r="3" fill="#000000" />
-<line x1="280" y1="484.0" x2="295" y2="484.0" class="conn-line" />
-<text x="286" y="479.0" class="card-lbl">1</text>
+<line x1="280" y1="484.0" x2="305" y2="484.0" class="conn-line" />
+<text x="293" y="478.0" class="card-lbl">1</text>
 <circle cx="280" cy="724.0" r="3" fill="#000000" />
-<line x1="280" y1="724.0" x2="295" y2="724.0" class="conn-line" />
-<text x="286" y="719.0" class="card-lbl">1</text>
-<circle cx="630" cy="94.0" r="3" fill="#000000" />
-<line x1="630" y1="94.0" x2="645" y2="94.0" class="conn-line" />
-<text x="636" y="89.0" class="card-lbl">1</text>
-<circle cx="630" cy="334.0" r="3" fill="#000000" />
-<line x1="630" y1="334.0" x2="645" y2="334.0" class="conn-line" />
-<text x="636" y="329.0" class="card-lbl">1</text>
-<path d="M 295 94.0 L 320 94.0 L 320 414.0 L 390 414.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="366" y="409.0" class="card-lbl">1:N</text>
-<path d="M 295 94.0 L 305 94.0 L 305 270 L 710 270 L 710 504.0 L 760 504.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="499.0" class="card-lbl">1:N</text>
-<path d="M 295 294.0 L 335 294.0 L 335 614.0 L 390 614.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="366" y="609.0" class="card-lbl">1:N</text>
-<path d="M 295 484.0 L 350 484.0 L 350 914.0 L 390 914.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="366" y="909.0" class="card-lbl">1:N</text>
-<path d="M 295 484.0 L 320 484.0 L 320 510 L 720 510 L 720 774.0 L 760 774.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="769.0" class="card-lbl">1:N</text>
-<path d="M 295 724.0 L 305 724.0 L 305 795 L 730 795 L 730 234.0 L 760 234.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="229.0" class="card-lbl">1:N</text>
-<path d="M 295 724.0 L 305 724.0 L 305 808 L 740 808 L 740 484.0 L 760 484.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="479.0" class="card-lbl">1:N</text>
-<path d="M 295 724.0 L 305 724.0 L 305 821 L 750 821 L 750 794.0 L 760 794.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="789.0" class="card-lbl">1:N</text>
-<path d="M 645 94.0 L 665 94.0 L 665 354.0 L 630 354.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="638" y="349.0" class="card-lbl">1:1</text>
-<path d="M 645 94.0 L 675 94.0 L 675 594.0 L 630 594.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="638" y="589.0" class="card-lbl">1:N</text>
-<path d="M 645 94.0 L 685 94.0 L 685 894.0 L 630 894.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="638" y="889.0" class="card-lbl">1:N</text>
-<path d="M 645 94.0 L 695 94.0 L 695 754.0 L 760 754.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="749.0" class="card-lbl">1:N</text>
-<path d="M 645 334.0 L 705 334.0 L 705 214.0 L 760 214.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="209.0" class="card-lbl">1:N</text>
-<path d="M 645 334.0 L 715 334.0 L 715 464.0 L 760 464.0" class="conn-line" marker-end="url(#arrow)" />
-<text x="736" y="459.0" class="card-lbl">1:N</text>
+<line x1="280" y1="724.0" x2="305" y2="724.0" class="conn-line" />
+<text x="293" y="718.0" class="card-lbl">1</text>
+<circle cx="660" cy="94.0" r="3" fill="#000000" />
+<line x1="660" y1="94.0" x2="685" y2="94.0" class="conn-line" />
+<text x="673" y="88.0" class="card-lbl">1</text>
+<circle cx="660" cy="334.0" r="3" fill="#000000" />
+<line x1="660" y1="334.0" x2="685" y2="334.0" class="conn-line" />
+<text x="673" y="328.0" class="card-lbl">1</text>
+<path d="M 305 94.0 L 345 94.0 L 345 414.0 L 420 414.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="402" y="408.0" class="card-lbl">1:N</text>
+<path d="M 305 94.0 L 315 94.0 L 315 270 L 768 270 L 768 504.0 L 850 504.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="498.0" class="card-lbl">1:N</text>
+<path d="M 305 294.0 L 360 294.0 L 360 614.0 L 420 614.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="402" y="608.0" class="card-lbl">1:N</text>
+<path d="M 305 484.0 L 375 484.0 L 375 914.0 L 420 914.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="402" y="908.0" class="card-lbl">1:N</text>
+<path d="M 305 484.0 L 328 484.0 L 328 510 L 778 510 L 778 774.0 L 850 774.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="768.0" class="card-lbl">1:N</text>
+<path d="M 305 724.0 L 315 724.0 L 315 795 L 788 795 L 788 234.0 L 850 234.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="228.0" class="card-lbl">1:N</text>
+<path d="M 305 724.0 L 315 724.0 L 315 808 L 798 808 L 798 484.0 L 850 484.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="478.0" class="card-lbl">1:N</text>
+<path d="M 305 724.0 L 315 724.0 L 315 821 L 808 821 L 808 794.0 L 850 794.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="788.0" class="card-lbl">1:N</text>
+<path d="M 685 94.0 L 695 94.0 L 695 354.0 L 660 354.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="678" y="348.0" class="card-lbl">1:1</text>
+<path d="M 685 94.0 L 708 94.0 L 708 594.0 L 660 594.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="678" y="588.0" class="card-lbl">1:N</text>
+<path d="M 685 94.0 L 720 94.0 L 720 894.0 L 660 894.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="678" y="888.0" class="card-lbl">1:N</text>
+<path d="M 685 94.0 L 732 94.0 L 732 754.0 L 850 754.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="748.0" class="card-lbl">1:N</text>
+<path d="M 685 334.0 L 744 334.0 L 744 214.0 L 850 214.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="208.0" class="card-lbl">1:N</text>
+<path d="M 685 334.0 L 756 334.0 L 756 464.0 L 850 464.0" class="conn-line" marker-end="url(#arrow)" />
+<text x="825" y="458.0" class="card-lbl">1:N</text>
 <rect x="50" y="60" width="230" height="144" class="tbl-border" />
 <text x="165.0" y="76" class="tbl-hdr">ref.trust_levels</text>
 <line x1="50" y1="84" x2="280" y2="84" class="row-line" />
@@ -119,190 +122,190 @@
 <text x="58" y="828" class="col-txt">trust_tier</text>
 <line x1="50" y1="834" x2="280" y2="834" class="row-line" />
 <text x="58" y="848" class="col-txt">is_active</text>
-<rect x="390" y="60" width="240" height="184" class="tbl-border" />
-<text x="510.0" y="76" class="tbl-hdr">app.citizens</text>
-<line x1="390" y1="84" x2="630" y2="84" class="row-line" />
-<text x="398" y="98" class="bold-tag">(PK) <tspan font-weight="normal">citizen_id</tspan></text>
-<line x1="390" y1="104" x2="630" y2="104" class="row-line" />
-<text x="398" y="118" class="col-txt">first_name</text>
-<line x1="390" y1="124" x2="630" y2="124" class="row-line" />
-<text x="398" y="138" class="col-txt">last_name</text>
-<line x1="390" y1="144" x2="630" y2="144" class="row-line" />
-<text x="398" y="158" class="col-txt">middle_name</text>
-<line x1="390" y1="164" x2="630" y2="164" class="row-line" />
-<text x="398" y="178" class="col-txt">birth_date</text>
-<line x1="390" y1="184" x2="630" y2="184" class="row-line" />
-<text x="398" y="198" class="col-txt">birth_place</text>
-<line x1="390" y1="204" x2="630" y2="204" class="row-line" />
-<text x="398" y="218" class="col-txt">gender</text>
-<line x1="390" y1="224" x2="630" y2="224" class="row-line" />
-<text x="398" y="238" class="col-txt">created_at</text>
-<rect x="390" y="300" width="240" height="184" class="tbl-border" />
-<text x="510.0" y="316" class="tbl-hdr">app.digital_profiles</text>
-<line x1="390" y1="324" x2="630" y2="324" class="row-line" />
-<text x="398" y="338" class="bold-tag">(PK) <tspan font-weight="normal">profile_id</tspan></text>
-<line x1="390" y1="344" x2="630" y2="344" class="row-line" />
-<text x="398" y="358" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
-<line x1="390" y1="364" x2="630" y2="364" class="row-line" />
-<text x="398" y="378" class="col-txt">snils</text>
-<line x1="390" y1="384" x2="630" y2="384" class="row-line" />
-<text x="398" y="398" class="col-txt">inn</text>
-<line x1="390" y1="404" x2="630" y2="404" class="row-line" />
-<text x="398" y="418" class="bold-tag">(FK) <tspan font-weight="normal">trust_level_id</tspan></text>
-<line x1="390" y1="424" x2="630" y2="424" class="row-line" />
-<text x="398" y="438" class="col-txt">profile_status</text>
-<line x1="390" y1="444" x2="630" y2="444" class="row-line" />
-<text x="398" y="458" class="col-txt">verified_at</text>
-<line x1="390" y1="464" x2="630" y2="464" class="row-line" />
-<text x="398" y="478" class="col-txt">created_at</text>
-<rect x="390" y="540" width="240" height="244" class="tbl-border" />
-<text x="510.0" y="556" class="tbl-hdr">app.electronic_passports</text>
-<line x1="390" y1="564" x2="630" y2="564" class="row-line" />
-<text x="398" y="578" class="bold-tag">(PK) <tspan font-weight="normal">passport_id</tspan></text>
-<line x1="390" y1="584" x2="630" y2="584" class="row-line" />
-<text x="398" y="598" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
-<line x1="390" y1="604" x2="630" y2="604" class="row-line" />
-<text x="398" y="618" class="bold-tag">(FK) <tspan font-weight="normal">doc_type_id</tspan></text>
-<line x1="390" y1="624" x2="630" y2="624" class="row-line" />
-<text x="398" y="638" class="col-txt">chip_uid</text>
-<line x1="390" y1="644" x2="630" y2="644" class="row-line" />
-<text x="398" y="658" class="col-txt">series</text>
-<line x1="390" y1="664" x2="630" y2="664" class="row-line" />
-<text x="398" y="678" class="col-txt">number</text>
-<line x1="390" y1="684" x2="630" y2="684" class="row-line" />
-<text x="398" y="698" class="col-txt">issue_date</text>
-<line x1="390" y1="704" x2="630" y2="704" class="row-line" />
-<text x="398" y="718" class="col-txt">expiry_date</text>
-<line x1="390" y1="724" x2="630" y2="724" class="row-line" />
-<text x="398" y="738" class="col-txt">issuing_authority_code</text>
-<line x1="390" y1="744" x2="630" y2="744" class="row-line" />
-<text x="398" y="758" class="col-txt">encrypted_chip_payload</text>
-<line x1="390" y1="764" x2="630" y2="764" class="row-line" />
-<text x="398" y="778" class="col-txt">is_active</text>
-<rect x="390" y="840" width="240" height="204" class="tbl-border" />
-<text x="510.0" y="856" class="tbl-hdr">app.biometric_templates</text>
-<line x1="390" y1="864" x2="630" y2="864" class="row-line" />
-<text x="398" y="878" class="bold-tag">(PK) <tspan font-weight="normal">biometric_id</tspan></text>
-<line x1="390" y1="884" x2="630" y2="884" class="row-line" />
-<text x="398" y="898" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
-<line x1="390" y1="904" x2="630" y2="904" class="row-line" />
-<text x="398" y="918" class="bold-tag">(FK) <tspan font-weight="normal">modality_id</tspan></text>
-<line x1="390" y1="924" x2="630" y2="924" class="row-line" />
-<text x="398" y="938" class="col-txt">template_hash</text>
-<line x1="390" y1="944" x2="630" y2="944" class="row-line" />
-<text x="398" y="958" class="col-txt">encrypted_template</text>
-<line x1="390" y1="964" x2="630" y2="964" class="row-line" />
-<text x="398" y="978" class="col-txt">quality_score</text>
-<line x1="390" y1="984" x2="630" y2="984" class="row-line" />
-<text x="398" y="998" class="col-txt">capture_device_id</text>
-<line x1="390" y1="1004" x2="630" y2="1004" class="row-line" />
-<text x="398" y="1018" class="col-txt">registered_at</text>
-<line x1="390" y1="1024" x2="630" y2="1024" class="row-line" />
-<text x="398" y="1038" class="col-txt">status</text>
-<rect x="760" y="160" width="250" height="184" class="tbl-border" />
-<text x="885.0" y="176" class="tbl-hdr">app.access_consents</text>
-<line x1="760" y1="184" x2="1010" y2="184" class="row-line" />
-<text x="768" y="198" class="bold-tag">(PK) <tspan font-weight="normal">consent_id</tspan></text>
-<line x1="760" y1="204" x2="1010" y2="204" class="row-line" />
-<text x="768" y="218" class="bold-tag">(FK) <tspan font-weight="normal">profile_id</tspan></text>
-<line x1="760" y1="224" x2="1010" y2="224" class="row-line" />
-<text x="768" y="238" class="bold-tag">(FK) <tspan font-weight="normal">agency_id</tspan></text>
-<line x1="760" y1="244" x2="1010" y2="244" class="row-line" />
-<text x="768" y="258" class="col-txt">scope</text>
-<line x1="760" y1="264" x2="1010" y2="264" class="row-line" />
-<text x="768" y="278" class="col-txt">granted_at</text>
-<line x1="760" y1="284" x2="1010" y2="284" class="row-line" />
-<text x="768" y="298" class="col-txt">valid_until</text>
-<line x1="760" y1="304" x2="1010" y2="304" class="row-line" />
-<text x="768" y="318" class="col-txt">is_revoked</text>
-<line x1="760" y1="324" x2="1010" y2="324" class="row-line" />
-<text x="768" y="338" class="col-txt">consent_signature</text>
-<rect x="760" y="410" width="250" height="184" class="tbl-border" />
-<text x="885.0" y="426" class="tbl-hdr">app.access_tokens</text>
-<line x1="760" y1="434" x2="1010" y2="434" class="row-line" />
-<text x="768" y="448" class="bold-tag">(PK) <tspan font-weight="normal">token_id</tspan></text>
-<line x1="760" y1="454" x2="1010" y2="454" class="row-line" />
-<text x="768" y="468" class="bold-tag">(FK) <tspan font-weight="normal">profile_id</tspan></text>
-<line x1="760" y1="474" x2="1010" y2="474" class="row-line" />
-<text x="768" y="488" class="bold-tag">(FK) <tspan font-weight="normal">agency_id</tspan></text>
-<line x1="760" y1="494" x2="1010" y2="494" class="row-line" />
-<text x="768" y="508" class="bold-tag">(FK) <tspan font-weight="normal">required_trust_level_id</tspan></text>
-<line x1="760" y1="514" x2="1010" y2="514" class="row-line" />
-<text x="768" y="528" class="col-txt">token_hash</text>
-<line x1="760" y1="534" x2="1010" y2="534" class="row-line" />
-<text x="768" y="548" class="col-txt">issued_at</text>
-<line x1="760" y1="554" x2="1010" y2="554" class="row-line" />
-<text x="768" y="568" class="col-txt">expires_at</text>
-<line x1="760" y1="574" x2="1010" y2="574" class="row-line" />
-<text x="768" y="588" class="col-txt">status</text>
-<rect x="760" y="680" width="250" height="184" class="tbl-border" />
-<text x="885.0" y="696" class="tbl-hdr">audit.biometric_verifications</text>
-<line x1="760" y1="704" x2="1010" y2="704" class="row-line" />
-<text x="768" y="718" class="bold-tag">(PK) <tspan font-weight="normal">verification_id</tspan></text>
-<line x1="760" y1="724" x2="1010" y2="724" class="row-line" />
-<text x="768" y="738" class="col-txt">verified_at</text>
-<line x1="760" y1="744" x2="1010" y2="744" class="row-line" />
-<text x="768" y="758" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
-<line x1="760" y1="764" x2="1010" y2="764" class="row-line" />
-<text x="768" y="778" class="bold-tag">(FK) <tspan font-weight="normal">modality_id</tspan></text>
-<line x1="760" y1="784" x2="1010" y2="784" class="row-line" />
-<text x="768" y="798" class="bold-tag">(FK) <tspan font-weight="normal">agency_id</tspan></text>
-<line x1="760" y1="804" x2="1010" y2="804" class="row-line" />
-<text x="768" y="818" class="col-txt">similarity_score</text>
-<line x1="760" y1="824" x2="1010" y2="824" class="row-line" />
-<text x="768" y="838" class="col-txt">decision</text>
-<line x1="760" y1="844" x2="1010" y2="844" class="row-line" />
-<text x="768" y="858" class="col-txt">client_ip</text>
-<rect x="1110" y="60" width="240" height="164" class="tbl-border" />
-<text x="1230.0" y="76" class="tbl-hdr">audit.login_log</text>
-<line x1="1110" y1="84" x2="1350" y2="84" class="row-line" />
-<text x="1118" y="98" class="bold-tag">(PK) <tspan font-weight="normal">login_id</tspan></text>
-<line x1="1110" y1="104" x2="1350" y2="104" class="row-line" />
-<text x="1118" y="118" class="col-txt">login_time</text>
-<line x1="1110" y1="124" x2="1350" y2="124" class="row-line" />
-<text x="1118" y="138" class="col-txt">username</text>
-<line x1="1110" y1="144" x2="1350" y2="144" class="row-line" />
-<text x="1118" y="158" class="col-txt">client_ip</text>
-<line x1="1110" y1="164" x2="1350" y2="164" class="row-line" />
-<text x="1118" y="178" class="col-txt">client_port</text>
-<line x1="1110" y1="184" x2="1350" y2="184" class="row-line" />
-<text x="1118" y="198" class="col-txt">auth_method</text>
-<line x1="1110" y1="204" x2="1350" y2="204" class="row-line" />
-<text x="1118" y="218" class="col-txt">session_status</text>
-<rect x="1110" y="290" width="240" height="204" class="tbl-border" />
-<text x="1230.0" y="306" class="tbl-hdr">audit.change_log</text>
-<line x1="1110" y1="314" x2="1350" y2="314" class="row-line" />
-<text x="1118" y="328" class="bold-tag">(PK) <tspan font-weight="normal">change_id</tspan></text>
-<line x1="1110" y1="334" x2="1350" y2="334" class="row-line" />
-<text x="1118" y="348" class="col-txt">changed_at</text>
-<line x1="1110" y1="354" x2="1350" y2="354" class="row-line" />
-<text x="1118" y="368" class="col-txt">username</text>
-<line x1="1110" y1="374" x2="1350" y2="374" class="row-line" />
-<text x="1118" y="388" class="col-txt">table_schema</text>
-<line x1="1110" y1="394" x2="1350" y2="394" class="row-line" />
-<text x="1118" y="408" class="col-txt">table_name</text>
-<line x1="1110" y1="414" x2="1350" y2="414" class="row-line" />
-<text x="1118" y="428" class="col-txt">operation</text>
-<line x1="1110" y1="434" x2="1350" y2="434" class="row-line" />
-<text x="1118" y="448" class="col-txt">row_id</text>
-<line x1="1110" y1="454" x2="1350" y2="454" class="row-line" />
-<text x="1118" y="468" class="col-txt">old_data</text>
-<line x1="1110" y1="474" x2="1350" y2="474" class="row-line" />
-<text x="1118" y="488" class="col-txt">new_data</text>
-<rect x="1110" y="560" width="240" height="164" class="tbl-border" />
-<text x="1230.0" y="576" class="tbl-hdr">stg.passport_batch_import</text>
-<line x1="1110" y1="584" x2="1350" y2="584" class="row-line" />
-<text x="1118" y="598" class="bold-tag">(PK) <tspan font-weight="normal">import_id</tspan></text>
-<line x1="1110" y1="604" x2="1350" y2="604" class="row-line" />
-<text x="1118" y="618" class="col-txt">batch_uuid</text>
-<line x1="1110" y1="624" x2="1350" y2="624" class="row-line" />
-<text x="1118" y="638" class="col-txt">source_system</text>
-<line x1="1110" y1="644" x2="1350" y2="644" class="row-line" />
-<text x="1118" y="658" class="col-txt">raw_payload</text>
-<line x1="1110" y1="664" x2="1350" y2="664" class="row-line" />
-<text x="1118" y="678" class="col-txt">loaded_at</text>
-<line x1="1110" y1="684" x2="1350" y2="684" class="row-line" />
-<text x="1118" y="698" class="col-txt">status</text>
-<line x1="1110" y1="704" x2="1350" y2="704" class="row-line" />
-<text x="1118" y="718" class="col-txt">error_message</text>
+<rect x="420" y="60" width="240" height="184" class="tbl-border" />
+<text x="540.0" y="76" class="tbl-hdr">app.citizens</text>
+<line x1="420" y1="84" x2="660" y2="84" class="row-line" />
+<text x="428" y="98" class="bold-tag">(PK) <tspan font-weight="normal">citizen_id</tspan></text>
+<line x1="420" y1="104" x2="660" y2="104" class="row-line" />
+<text x="428" y="118" class="col-txt">first_name</text>
+<line x1="420" y1="124" x2="660" y2="124" class="row-line" />
+<text x="428" y="138" class="col-txt">last_name</text>
+<line x1="420" y1="144" x2="660" y2="144" class="row-line" />
+<text x="428" y="158" class="col-txt">middle_name</text>
+<line x1="420" y1="164" x2="660" y2="164" class="row-line" />
+<text x="428" y="178" class="col-txt">birth_date</text>
+<line x1="420" y1="184" x2="660" y2="184" class="row-line" />
+<text x="428" y="198" class="col-txt">birth_place</text>
+<line x1="420" y1="204" x2="660" y2="204" class="row-line" />
+<text x="428" y="218" class="col-txt">gender</text>
+<line x1="420" y1="224" x2="660" y2="224" class="row-line" />
+<text x="428" y="238" class="col-txt">created_at</text>
+<rect x="420" y="300" width="240" height="184" class="tbl-border" />
+<text x="540.0" y="316" class="tbl-hdr">app.digital_profiles</text>
+<line x1="420" y1="324" x2="660" y2="324" class="row-line" />
+<text x="428" y="338" class="bold-tag">(PK) <tspan font-weight="normal">profile_id</tspan></text>
+<line x1="420" y1="344" x2="660" y2="344" class="row-line" />
+<text x="428" y="358" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
+<line x1="420" y1="364" x2="660" y2="364" class="row-line" />
+<text x="428" y="378" class="col-txt">snils</text>
+<line x1="420" y1="384" x2="660" y2="384" class="row-line" />
+<text x="428" y="398" class="col-txt">inn</text>
+<line x1="420" y1="404" x2="660" y2="404" class="row-line" />
+<text x="428" y="418" class="bold-tag">(FK) <tspan font-weight="normal">trust_level_id</tspan></text>
+<line x1="420" y1="424" x2="660" y2="424" class="row-line" />
+<text x="428" y="438" class="col-txt">profile_status</text>
+<line x1="420" y1="444" x2="660" y2="444" class="row-line" />
+<text x="428" y="458" class="col-txt">verified_at</text>
+<line x1="420" y1="464" x2="660" y2="464" class="row-line" />
+<text x="428" y="478" class="col-txt">created_at</text>
+<rect x="420" y="540" width="240" height="244" class="tbl-border" />
+<text x="540.0" y="556" class="tbl-hdr">app.electronic_passports</text>
+<line x1="420" y1="564" x2="660" y2="564" class="row-line" />
+<text x="428" y="578" class="bold-tag">(PK) <tspan font-weight="normal">passport_id</tspan></text>
+<line x1="420" y1="584" x2="660" y2="584" class="row-line" />
+<text x="428" y="598" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
+<line x1="420" y1="604" x2="660" y2="604" class="row-line" />
+<text x="428" y="618" class="bold-tag">(FK) <tspan font-weight="normal">doc_type_id</tspan></text>
+<line x1="420" y1="624" x2="660" y2="624" class="row-line" />
+<text x="428" y="638" class="col-txt">chip_uid</text>
+<line x1="420" y1="644" x2="660" y2="644" class="row-line" />
+<text x="428" y="658" class="col-txt">series</text>
+<line x1="420" y1="664" x2="660" y2="664" class="row-line" />
+<text x="428" y="678" class="col-txt">number</text>
+<line x1="420" y1="684" x2="660" y2="684" class="row-line" />
+<text x="428" y="698" class="col-txt">issue_date</text>
+<line x1="420" y1="704" x2="660" y2="704" class="row-line" />
+<text x="428" y="718" class="col-txt">expiry_date</text>
+<line x1="420" y1="724" x2="660" y2="724" class="row-line" />
+<text x="428" y="738" class="col-txt">issuing_authority_code</text>
+<line x1="420" y1="744" x2="660" y2="744" class="row-line" />
+<text x="428" y="758" class="col-txt">encrypted_chip_payload</text>
+<line x1="420" y1="764" x2="660" y2="764" class="row-line" />
+<text x="428" y="778" class="col-txt">is_active</text>
+<rect x="420" y="840" width="240" height="204" class="tbl-border" />
+<text x="540.0" y="856" class="tbl-hdr">app.biometric_templates</text>
+<line x1="420" y1="864" x2="660" y2="864" class="row-line" />
+<text x="428" y="878" class="bold-tag">(PK) <tspan font-weight="normal">biometric_id</tspan></text>
+<line x1="420" y1="884" x2="660" y2="884" class="row-line" />
+<text x="428" y="898" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
+<line x1="420" y1="904" x2="660" y2="904" class="row-line" />
+<text x="428" y="918" class="bold-tag">(FK) <tspan font-weight="normal">modality_id</tspan></text>
+<line x1="420" y1="924" x2="660" y2="924" class="row-line" />
+<text x="428" y="938" class="col-txt">template_hash</text>
+<line x1="420" y1="944" x2="660" y2="944" class="row-line" />
+<text x="428" y="958" class="col-txt">encrypted_template</text>
+<line x1="420" y1="964" x2="660" y2="964" class="row-line" />
+<text x="428" y="978" class="col-txt">quality_score</text>
+<line x1="420" y1="984" x2="660" y2="984" class="row-line" />
+<text x="428" y="998" class="col-txt">capture_device_id</text>
+<line x1="420" y1="1004" x2="660" y2="1004" class="row-line" />
+<text x="428" y="1018" class="col-txt">registered_at</text>
+<line x1="420" y1="1024" x2="660" y2="1024" class="row-line" />
+<text x="428" y="1038" class="col-txt">status</text>
+<rect x="850" y="160" width="250" height="184" class="tbl-border" />
+<text x="975.0" y="176" class="tbl-hdr">app.access_consents</text>
+<line x1="850" y1="184" x2="1100" y2="184" class="row-line" />
+<text x="858" y="198" class="bold-tag">(PK) <tspan font-weight="normal">consent_id</tspan></text>
+<line x1="850" y1="204" x2="1100" y2="204" class="row-line" />
+<text x="858" y="218" class="bold-tag">(FK) <tspan font-weight="normal">profile_id</tspan></text>
+<line x1="850" y1="224" x2="1100" y2="224" class="row-line" />
+<text x="858" y="238" class="bold-tag">(FK) <tspan font-weight="normal">agency_id</tspan></text>
+<line x1="850" y1="244" x2="1100" y2="244" class="row-line" />
+<text x="858" y="258" class="col-txt">scope</text>
+<line x1="850" y1="264" x2="1100" y2="264" class="row-line" />
+<text x="858" y="278" class="col-txt">granted_at</text>
+<line x1="850" y1="284" x2="1100" y2="284" class="row-line" />
+<text x="858" y="298" class="col-txt">valid_until</text>
+<line x1="850" y1="304" x2="1100" y2="304" class="row-line" />
+<text x="858" y="318" class="col-txt">is_revoked</text>
+<line x1="850" y1="324" x2="1100" y2="324" class="row-line" />
+<text x="858" y="338" class="col-txt">consent_signature</text>
+<rect x="850" y="410" width="250" height="184" class="tbl-border" />
+<text x="975.0" y="426" class="tbl-hdr">app.access_tokens</text>
+<line x1="850" y1="434" x2="1100" y2="434" class="row-line" />
+<text x="858" y="448" class="bold-tag">(PK) <tspan font-weight="normal">token_id</tspan></text>
+<line x1="850" y1="454" x2="1100" y2="454" class="row-line" />
+<text x="858" y="468" class="bold-tag">(FK) <tspan font-weight="normal">profile_id</tspan></text>
+<line x1="850" y1="474" x2="1100" y2="474" class="row-line" />
+<text x="858" y="488" class="bold-tag">(FK) <tspan font-weight="normal">agency_id</tspan></text>
+<line x1="850" y1="494" x2="1100" y2="494" class="row-line" />
+<text x="858" y="508" class="bold-tag">(FK) <tspan font-weight="normal">required_trust_level_id</tspan></text>
+<line x1="850" y1="514" x2="1100" y2="514" class="row-line" />
+<text x="858" y="528" class="col-txt">token_hash</text>
+<line x1="850" y1="534" x2="1100" y2="534" class="row-line" />
+<text x="858" y="548" class="col-txt">issued_at</text>
+<line x1="850" y1="554" x2="1100" y2="554" class="row-line" />
+<text x="858" y="568" class="col-txt">expires_at</text>
+<line x1="850" y1="574" x2="1100" y2="574" class="row-line" />
+<text x="858" y="588" class="col-txt">status</text>
+<rect x="850" y="680" width="250" height="184" class="tbl-border" />
+<text x="975.0" y="696" class="tbl-hdr">audit.biometric_verifications</text>
+<line x1="850" y1="704" x2="1100" y2="704" class="row-line" />
+<text x="858" y="718" class="bold-tag">(PK) <tspan font-weight="normal">verification_id</tspan></text>
+<line x1="850" y1="724" x2="1100" y2="724" class="row-line" />
+<text x="858" y="738" class="col-txt">verified_at</text>
+<line x1="850" y1="744" x2="1100" y2="744" class="row-line" />
+<text x="858" y="758" class="bold-tag">(FK) <tspan font-weight="normal">citizen_id</tspan></text>
+<line x1="850" y1="764" x2="1100" y2="764" class="row-line" />
+<text x="858" y="778" class="bold-tag">(FK) <tspan font-weight="normal">modality_id</tspan></text>
+<line x1="850" y1="784" x2="1100" y2="784" class="row-line" />
+<text x="858" y="798" class="bold-tag">(FK) <tspan font-weight="normal">agency_id</tspan></text>
+<line x1="850" y1="804" x2="1100" y2="804" class="row-line" />
+<text x="858" y="818" class="col-txt">similarity_score</text>
+<line x1="850" y1="824" x2="1100" y2="824" class="row-line" />
+<text x="858" y="838" class="col-txt">decision</text>
+<line x1="850" y1="844" x2="1100" y2="844" class="row-line" />
+<text x="858" y="858" class="col-txt">client_ip</text>
+<rect x="1160" y="60" width="240" height="164" class="tbl-border" />
+<text x="1280.0" y="76" class="tbl-hdr">audit.login_log</text>
+<line x1="1160" y1="84" x2="1400" y2="84" class="row-line" />
+<text x="1168" y="98" class="bold-tag">(PK) <tspan font-weight="normal">login_id</tspan></text>
+<line x1="1160" y1="104" x2="1400" y2="104" class="row-line" />
+<text x="1168" y="118" class="col-txt">login_time</text>
+<line x1="1160" y1="124" x2="1400" y2="124" class="row-line" />
+<text x="1168" y="138" class="col-txt">username</text>
+<line x1="1160" y1="144" x2="1400" y2="144" class="row-line" />
+<text x="1168" y="158" class="col-txt">client_ip</text>
+<line x1="1160" y1="164" x2="1400" y2="164" class="row-line" />
+<text x="1168" y="178" class="col-txt">client_port</text>
+<line x1="1160" y1="184" x2="1400" y2="184" class="row-line" />
+<text x="1168" y="198" class="col-txt">auth_method</text>
+<line x1="1160" y1="204" x2="1400" y2="204" class="row-line" />
+<text x="1168" y="218" class="col-txt">session_status</text>
+<rect x="1160" y="290" width="240" height="204" class="tbl-border" />
+<text x="1280.0" y="306" class="tbl-hdr">audit.change_log</text>
+<line x1="1160" y1="314" x2="1400" y2="314" class="row-line" />
+<text x="1168" y="328" class="bold-tag">(PK) <tspan font-weight="normal">change_id</tspan></text>
+<line x1="1160" y1="334" x2="1400" y2="334" class="row-line" />
+<text x="1168" y="348" class="col-txt">changed_at</text>
+<line x1="1160" y1="354" x2="1400" y2="354" class="row-line" />
+<text x="1168" y="368" class="col-txt">username</text>
+<line x1="1160" y1="374" x2="1400" y2="374" class="row-line" />
+<text x="1168" y="388" class="col-txt">table_schema</text>
+<line x1="1160" y1="394" x2="1400" y2="394" class="row-line" />
+<text x="1168" y="408" class="col-txt">table_name</text>
+<line x1="1160" y1="414" x2="1400" y2="414" class="row-line" />
+<text x="1168" y="428" class="col-txt">operation</text>
+<line x1="1160" y1="434" x2="1400" y2="434" class="row-line" />
+<text x="1168" y="448" class="col-txt">row_id</text>
+<line x1="1160" y1="454" x2="1400" y2="454" class="row-line" />
+<text x="1168" y="468" class="col-txt">old_data</text>
+<line x1="1160" y1="474" x2="1400" y2="474" class="row-line" />
+<text x="1168" y="488" class="col-txt">new_data</text>
+<rect x="1160" y="560" width="240" height="164" class="tbl-border" />
+<text x="1280.0" y="576" class="tbl-hdr">stg.passport_batch_import</text>
+<line x1="1160" y1="584" x2="1400" y2="584" class="row-line" />
+<text x="1168" y="598" class="bold-tag">(PK) <tspan font-weight="normal">import_id</tspan></text>
+<line x1="1160" y1="604" x2="1400" y2="604" class="row-line" />
+<text x="1168" y="618" class="col-txt">batch_uuid</text>
+<line x1="1160" y1="624" x2="1400" y2="624" class="row-line" />
+<text x="1168" y="638" class="col-txt">source_system</text>
+<line x1="1160" y1="644" x2="1400" y2="644" class="row-line" />
+<text x="1168" y="658" class="col-txt">raw_payload</text>
+<line x1="1160" y1="664" x2="1400" y2="664" class="row-line" />
+<text x="1168" y="678" class="col-txt">loaded_at</text>
+<line x1="1160" y1="684" x2="1400" y2="684" class="row-line" />
+<text x="1168" y="698" class="col-txt">status</text>
+<line x1="1160" y1="704" x2="1400" y2="704" class="row-line" />
+<text x="1168" y="718" class="col-txt">error_message</text>
 </svg>

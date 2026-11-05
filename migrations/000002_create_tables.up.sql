@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS audit.login_log (
     login_time TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
     username TEXT NOT NULL,
     client_ip INET,
-    client_port INT,
+    client_port INT CHECK (client_port > 0 AND client_port <= 65535),
     auth_method VARCHAR(50) DEFAULT 'PASSWORD',
     session_status VARCHAR(30) DEFAULT 'SUCCESS' CHECK (session_status IN ('SUCCESS', 'DENIED', 'TERMINATED'))
 );
