@@ -49,17 +49,15 @@
     // Подпись таблицы: сверху, по левому краю, без абзацного отступа
     set align(left)
     set par(first-line-indent: 0cm)
-    set text(font: "Times New Roman", size: 14pt)
     block(below: 0.6em, above: 1em)[
-      #c.supplement #context c.counter.display(c.numbering) #sym.dash.en #c.body
+      #text(font: "Times New Roman", size: 14pt)[#c.supplement #context c.counter.display(c.numbering) #sym.dash.en #c.body]
     ]
   } else {
-    // Подпись рисунка: снизу, по центру, после подписи обязательно пустая строка
+    // Подпись рисунка: снизу, по центру, размер шрифта 14pt
     set align(center)
     set par(first-line-indent: 0cm)
-    set text(font: "Times New Roman", size: 14pt)
     block(above: 0.8em, below: 1.8em)[
-      #c.supplement #context c.counter.display(c.numbering) #sym.dash.en #c.body
+      #text(font: "Times New Roman", size: 14pt)[#c.supplement #context c.counter.display(c.numbering) #sym.dash.en #c.body]
     ]
   }
 }
